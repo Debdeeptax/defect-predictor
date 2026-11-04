@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+.env
+instance/*.db
+instance/uploads/
+instance/workspaces/
+logs/*.log*
+data/processed/*
+!data/processed/.gitkeep
+.ipynb_checkpoints/
