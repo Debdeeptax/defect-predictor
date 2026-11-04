@@ -1,0 +1,548 @@
+{
+  "function": {
+    "active": "function_v1_rf_smote_20261104073305.joblib",
+    "versions": [
+      {
+        "level": "function",
+        "version": 1,
+        "algorithm": "random_forest",
+        "imbalance": "smote",
+        "features": [
+          "loc_total",
+          "loc_executable",
+          "loc_comments",
+          "loc_blank",
+          "loc_code_and_comment",
+          "cyclomatic_complexity",
+          "branch_count",
+          "halstead_n1",
+          "halstead_n2",
+          "halstead_N1",
+          "halstead_N2",
+          "halstead_length",
+          "halstead_volume",
+          "halstead_difficulty",
+          "halstead_effort",
+          "halstead_level",
+          "halstead_content",
+          "halstead_error_est",
+          "halstead_prog_time"
+        ],
+        "random_state": 42,
+        "sklearn_version": "1.7.2",
+        "trained_at": "2026-11-04T07:33:05+00:00",
+        "file": "function_v1_rf_smote_20261104073305.joblib",
+        "display_name": "Random Forest / SMOTE (in-fold)",
+        "dataset": "nasa_mdp_d2",
+        "n_samples": 15184,
+        "positive_rate": 0.1905295047418335,
+        "cv": {
+          "folds": 5,
+          "repeats": 5,
+          "metrics": {
+            "accuracy": {
+              "mean": 0.7925843798249348,
+              "std": 0.005232744742373799
+            },
+            "precision": {
+              "mean": 0.4475087586780381,
+              "std": 0.015593966456035202
+            },
+            "recall": {
+              "mean": 0.3756036837167052,
+              "std": 0.016553588319218684
+            },
+            "f1": {
+              "mean": 0.40821762852014487,
+              "std": 0.013466390695699007
+            },
+            "roc_auc": {
+              "mean": 0.7336187507858767,
+              "std": 0.00938521173082373
+            },
+            "pr_auc": {
+              "mean": 0.41617864856475756,
+              "std": 0.015173353689750148
+            },
+            "mcc": {
+              "mean": 0.2853850082408637,
+              "std": 0.0156472429861597
+            }
+          }
+        },
+        "cross_project_auc": 0.694799491300551,
+        "significance": {
+          "metric": "roc_auc",
+          "best": "random_forest+smote",
+          "n_folds": 25,
+          "friedman": {
+            "chi2": 84.7714285714286,
+            "p": 8.405972689678367e-17
+          },
+          "pairwise": [
+            {
+              "vs": "logistic_regression+balanced",
+              "p_raw": 5.960464477539063e-08,
+              "p_holm": 2.980232238769531e-07,
+              "cliffs_delta": 0.7248,
+              "effect": "large",
+              "significant": true
+            },
+            {
+              "vs": "logistic_regression+smote",
+              "p_raw": 5.960464477539063e-08,
+              "p_holm": 2.980232238769531e-07,
+              "cliffs_delta": 0.7504,
+              "effect": "large",
+              "significant": true
+            },
+            {
+              "vs": "mlp+smote",
+              "p_raw": 5.960464477539063e-08,
+              "p_holm": 2.980232238769531e-07,
+              "cliffs_delta": 0.9232,
+              "effect": "large",
+              "significant": true
+            },
+            {
+              "vs": "mlp+balanced",
+              "p_raw": 1.7881393432617188e-07,
+              "p_holm": 3.5762786865234375e-07,
+              "cliffs_delta": 0.7952,
+              "effect": "large",
+              "significant": true
+            },
+            {
+              "vs": "random_forest+balanced",
+              "p_raw": 2.980232238769531e-07,
+              "p_holm": 3.5762786865234375e-07,
+              "cliffs_delta": 0.3856,
+              "effect": "medium",
+              "significant": true
+            }
+          ],
+          "note": "Repeated-CV folds overlap, so p-values are optimistic; read alongside effect sizes."
+        },
+        "feature_importance": [
+          {
+            "feature": "loc_total",
+            "label": "Total LOC",
+            "importance": 0.1047177509554281,
+            "std": 0.006039890643255839
+          },
+          {
+            "feature": "loc_blank",
+            "label": "Blank lines",
+            "importance": 0.03584942516784978,
+            "std": 0.0037784234915110024
+          },
+          {
+            "feature": "loc_executable",
+            "label": "Executable LOC",
+            "importance": 0.019272326365493662,
+            "std": 0.00385477048540734
+          },
+          {
+            "feature": "loc_comments",
+            "label": "Comment lines",
+            "importance": 0.019174566867361752,
+            "std": 0.0018152727293971234
+          },
+          {
+            "feature": "loc_code_and_comment",
+            "label": "Code+comment lines",
+            "importance": 0.017747647268247724,
+            "std": 0.002442823793784557
+          },
+          {
+            "feature": "cyclomatic_complexity",
+            "label": "Cyclomatic complexity v(g)",
+            "importance": 0.012761147710911035,
+            "std": 0.0015705729447994105
+          },
+          {
+            "feature": "halstead_n1",
+            "label": "Distinct operators (n1)",
+            "importance": 0.012570129612351289,
+            "std": 0.0025764645287755534
+          },
+          {
+            "feature": "halstead_n2",
+            "label": "Distinct operands (n2)",
+            "importance": 0.008334604836934812,
+            "std": 0.001990167068700273
+          },
+          {
+            "feature": "halstead_N2",
+            "label": "Total operands (N2)",
+            "importance": 0.008283902224298733,
+            "std": 0.0011667092731719208
+          },
+          {
+            "feature": "branch_count",
+            "label": "Branch count",
+            "importance": 0.0076561170125382105,
+            "std": 0.0012314306712567721
+          },
+          {
+            "feature": "halstead_content",
+            "label": "Halstead content (I)",
+            "importance": 0.0034794189701136792,
+            "std": 0.0018031989477529564
+          },
+          {
+            "feature": "halstead_N1",
+            "label": "Total operators (N1)",
+            "importance": 0.0023229583140358056,
+            "std": 0.0008122185599693982
+          },
+          {
+            "feature": "halstead_difficulty",
+            "label": "Halstead difficulty (D)",
+            "importance": 0.0009863042183764549,
+            "std": 0.0013144809137657552
+          },
+          {
+            "feature": "halstead_length",
+            "label": "Halstead length (N)",
+            "importance": 0.0009715412739071949,
+            "std": 0.0009681308993319191
+          },
+          {
+            "feature": "halstead_error_est",
+            "label": "Halstead error estimate (B)",
+            "importance": 0.0001609521018968163,
+            "std": 0.0010284288080823142
+          },
+          {
+            "feature": "halstead_level",
+            "label": "Halstead level (L)",
+            "importance": -3.159630188235285e-05,
+            "std": 0.0016563293650138336
+          },
+          {
+            "feature": "halstead_volume",
+            "label": "Halstead volume (V)",
+            "importance": -0.00016741089010195996,
+            "std": 0.001512748562777149
+          },
+          {
+            "feature": "halstead_prog_time",
+            "label": "Halstead programming time (T)",
+            "importance": -0.0005713889635286962,
+            "std": 0.0011570745309295145
+          },
+          {
+            "feature": "halstead_effort",
+            "label": "Halstead effort (E)",
+            "importance": -0.0006112894216750764,
+            "std": 0.000826722245372891
+          }
+        ],
+        "cleaning": {
+          "level": "function",
+          "rows_in": 16425,
+          "dropped_na": 0,
+          "dropped_invalid": 132,
+          "dropped_duplicates": 1087,
+          "dropped_conflicts": 22,
+          "dropped_projects": [],
+          "rows_out": 15184,
+          "positive_rate": 0.1905295047418335,
+          "projects": [
+            "CM1",
+            "JM1",
+            "KC1",
+            "KC3",
+            "MC1",
+            "MC2",
+            "MW1",
+            "PC1",
+            "PC3",
+            "PC4",
+            "PC5"
+          ],
+          "skipped_files": [
+            {
+              "file": "PC2.csv",
+              "reason": "Missing NASA MDP columns: ['LOC_BLANK']"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "class": {
+    "active": "class_v1_rf_smote_20261104073649.joblib",
+    "versions": [
+      {
+        "level": "class",
+        "version": 1,
+        "algorithm": "random_forest",
+        "imbalance": "smote",
+        "features": [
+          "wmc",
+          "dit",
+          "noc",
+          "cbo",
+          "rfc",
+          "lcom",
+          "loc",
+          "max_cc",
+          "avg_cc",
+          "ce",
+          "npm",
+          "amc",
+          "lcom3"
+        ],
+        "random_state": 42,
+        "sklearn_version": "1.7.2",
+        "trained_at": "2026-11-04T07:36:49+00:00",
+        "file": "class_v1_rf_smote_20261104073649.joblib",
+        "display_name": "Random Forest / SMOTE (in-fold)",
+        "dataset": "promise_ck",
+        "n_samples": 8466,
+        "positive_rate": 0.3368769194424758,
+        "cv": {
+          "folds": 5,
+          "repeats": 5,
+          "metrics": {
+            "accuracy": {
+              "mean": 0.713678072987529,
+              "std": 0.007277169455163275
+            },
+            "precision": {
+              "mean": 0.579295537048389,
+              "std": 0.012904452945703485
+            },
+            "recall": {
+              "mean": 0.549997972163333,
+              "std": 0.017639267047305843
+            },
+            "f1": {
+              "mean": 0.5640450321933151,
+              "std": 0.010897817558734296
+            },
+            "roc_auc": {
+              "mean": 0.7406409637126317,
+              "std": 0.00898822556719279
+            },
+            "pr_auc": {
+              "mean": 0.5884009613019855,
+              "std": 0.013898134335328242
+            },
+            "mcc": {
+              "mean": 0.3515676099462266,
+              "std": 0.014953398828529425
+            }
+          }
+        },
+        "cross_project_auc": 0.6783949073005071,
+        "significance": {
+          "metric": "roc_auc",
+          "best": "random_forest+smote",
+          "n_folds": 25,
+          "friedman": {
+            "chi2": 107.39999999999998,
+            "p": 1.4513936431764406e-21
+          },
+          "pairwise": [
+            {
+              "vs": "logistic_regression+balanced",
+              "p_raw": 5.960464477539063e-08,
+              "p_holm": 2.980232238769531e-07,
+              "cliffs_delta": 0.9904,
+              "effect": "large",
+              "significant": true
+            },
+            {
+              "vs": "logistic_regression+smote",
+              "p_raw": 5.960464477539063e-08,
+              "p_holm": 2.980232238769531e-07,
+              "cliffs_delta": 0.9904,
+              "effect": "large",
+              "significant": true
+            },
+            {
+              "vs": "mlp+smote",
+              "p_raw": 2.980232238769531e-07,
+              "p_holm": 8.940696716308594e-07,
+              "cliffs_delta": 0.8912,
+              "effect": "large",
+              "significant": true
+            },
+            {
+              "vs": "mlp+balanced",
+              "p_raw": 8.344650268554688e-07,
+              "p_holm": 1.6689300537109375e-06,
+              "cliffs_delta": 0.8592,
+              "effect": "large",
+              "significant": true
+            },
+            {
+              "vs": "random_forest+balanced",
+              "p_raw": 0.07547956705093384,
+              "p_holm": 0.07547956705093384,
+              "cliffs_delta": 0.12,
+              "effect": "negligible",
+              "significant": false
+            }
+          ],
+          "note": "Repeated-CV folds overlap, so p-values are optimistic; read alongside effect sizes."
+        },
+        "feature_importance": [
+          {
+            "feature": "loc",
+            "label": "Class LOC",
+            "importance": 0.049995754466301334,
+            "std": 0.007398397932480195
+          },
+          {
+            "feature": "ce",
+            "label": "Efferent coupling (Ce)",
+            "importance": 0.025892860710532418,
+            "std": 0.003987750569898674
+          },
+          {
+            "feature": "npm",
+            "label": "Public methods (NPM)",
+            "importance": 0.025599569253145615,
+            "std": 0.004951211641468454
+          },
+          {
+            "feature": "dit",
+            "label": "Depth of inheritance (DIT)",
+            "importance": 0.016436808477481614,
+            "std": 0.0014436573828087898
+          },
+          {
+            "feature": "lcom3",
+            "label": "Cohesion LCOM3 (Henderson-Sellers)",
+            "importance": 0.015824502623240234,
+            "std": 0.0030401277051869007
+          },
+          {
+            "feature": "cbo",
+            "label": "Coupling between objects (CBO)",
+            "importance": 0.011894986474229008,
+            "std": 0.002347295867062667
+          },
+          {
+            "feature": "amc",
+            "label": "Avg method size (AMC)",
+            "importance": 0.010818718707919195,
+            "std": 0.003359010868969605
+          },
+          {
+            "feature": "lcom",
+            "label": "Lack of cohesion (LCOM)",
+            "importance": 0.008139537206858305,
+            "std": 0.0008779162298140357
+          },
+          {
+            "feature": "rfc",
+            "label": "Response for class (RFC)",
+            "importance": 0.00806646407978796,
+            "std": 0.0030164478523190858
+          },
+          {
+            "feature": "max_cc",
+            "label": "Max method complexity",
+            "importance": 0.007745701521998716,
+            "std": 0.0018408769941883115
+          },
+          {
+            "feature": "wmc",
+            "label": "Weighted methods per class (WMC)",
+            "importance": 0.005379091196061658,
+            "std": 0.003252613686710604
+          },
+          {
+            "feature": "avg_cc",
+            "label": "Avg method complexity",
+            "importance": 0.00450216372376252,
+            "std": 0.0025946721816411064
+          },
+          {
+            "feature": "noc",
+            "label": "Number of children (NOC)",
+            "importance": 0.002902446626149213,
+            "std": 0.0006865105389685727
+          }
+        ],
+        "cleaning": {
+          "level": "class",
+          "rows_in": 15775,
+          "dropped_na": 0,
+          "dropped_invalid": 129,
+          "dropped_duplicates": 3935,
+          "dropped_conflicts": 2282,
+          "dropped_projects": [
+            {
+              "project": "xalan-2.7",
+              "defect_rate": 0.9977,
+              "rows": 433
+            },
+            {
+              "project": "log4j-1.2",
+              "defect_rate": 0.9424,
+              "rows": 139
+            },
+            {
+              "project": "xerces-1.4.4",
+              "defect_rate": 0.9004,
+              "rows": 261
+            },
+            {
+              "project": "velocity-1.5",
+              "defect_rate": 0.7769,
+              "rows": 130
+            }
+          ],
+          "rows_out": 8466,
+          "positive_rate": 0.3368769194424758,
+          "projects": [
+            "ant-1.3",
+            "ant-1.4",
+            "ant-1.5",
+            "ant-1.6",
+            "ant-1.7",
+            "camel-1.0",
+            "camel-1.2",
+            "camel-1.4",
+            "camel-1.6",
+            "ivy-1.0",
+            "ivy-1.1",
+            "ivy-1.2",
+            "jedit-3.2",
+            "jedit-4.0",
+            "jedit-4.1",
+            "jedit-4.2",
+            "jedit-4.3",
+            "log4j-1.0",
+            "log4j-1.1",
+            "lucene-2.0",
+            "lucene-2.2",
+            "lucene-2.4",
+            "poi-1.5",
+            "poi-2.0",
+            "poi-2.5",
+            "poi-3.0",
+            "synapse-1.0",
+            "synapse-1.1",
+            "synapse-1.2",
+            "velocity-1.4",
+            "velocity-1.6",
+            "xalan-2.4",
+            "xalan-2.5",
+            "xalan-2.6",
+            "xerces-1.1",
+            "xerces-1.2",
+            "xerces-1.3"
+          ],
+          "skipped_files": []
+        }
+      }
+    ]
+  }
+}

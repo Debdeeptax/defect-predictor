@@ -1,0 +1,52 @@
+{
+  "metric": "roc_auc",
+  "best": "random_forest+smote",
+  "n_folds": 25,
+  "friedman": {
+    "chi2": 107.39999999999998,
+    "p": 1.4513936431764406e-21
+  },
+  "pairwise": [
+    {
+      "vs": "logistic_regression+balanced",
+      "p_raw": 5.960464477539063e-08,
+      "p_holm": 2.980232238769531e-07,
+      "cliffs_delta": 0.9904,
+      "effect": "large",
+      "significant": true
+    },
+    {
+      "vs": "logistic_regression+smote",
+      "p_raw": 5.960464477539063e-08,
+      "p_holm": 2.980232238769531e-07,
+      "cliffs_delta": 0.9904,
+      "effect": "large",
+      "significant": true
+    },
+    {
+      "vs": "mlp+smote",
+      "p_raw": 2.980232238769531e-07,
+      "p_holm": 8.940696716308594e-07,
+      "cliffs_delta": 0.8912,
+      "effect": "large",
+      "significant": true
+    },
+    {
+      "vs": "mlp+balanced",
+      "p_raw": 8.344650268554688e-07,
+      "p_holm": 1.6689300537109375e-06,
+      "cliffs_delta": 0.8592,
+      "effect": "large",
+      "significant": true
+    },
+    {
+      "vs": "random_forest+balanced",
+      "p_raw": 0.07547956705093384,
+      "p_holm": 0.07547956705093384,
+      "cliffs_delta": 0.12,
+      "effect": "negligible",
+      "significant": false
+    }
+  ],
+  "note": "Repeated-CV folds overlap, so p-values are optimistic; read alongside effect sizes."
+}

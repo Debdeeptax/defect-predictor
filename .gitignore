@@ -12,3 +12,4 @@ logs/*.log*
 data/processed/*
 !data/processed/.gitkeep
 .ipynb_checkpoints/
+models/*.joblib

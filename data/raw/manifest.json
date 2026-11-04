@@ -1,0 +1,373 @@
+[
+  {
+    "dataset": "nasa_mdp_d2",
+    "project": "CM1",
+    "url": "https://raw.githubusercontent.com/klainfo/NASADefectDataset/master/CleanedData/MDP/D%27%27/CM1.arff",
+    "file": "data/raw/nasa/CM1.arff",
+    "sha256": "870f523699f25bb78c1b6dab73961be8380cd73f3fd41fefe961c65048876a79"
+  },
+  {
+    "dataset": "nasa_mdp_d2",
+    "project": "JM1",
+    "url": "https://raw.githubusercontent.com/klainfo/NASADefectDataset/master/CleanedData/MDP/D%27%27/JM1.arff",
+    "file": "data/raw/nasa/JM1.arff",
+    "sha256": "579060380b8d8cb1d9d9414ebf2eb742c9c90faf491ff1182e2c15bb2aaac022"
+  },
+  {
+    "dataset": "nasa_mdp_d2",
+    "project": "KC1",
+    "url": "https://raw.githubusercontent.com/klainfo/NASADefectDataset/master/CleanedData/MDP/D%27%27/KC1.arff",
+    "file": "data/raw/nasa/KC1.arff",
+    "sha256": "5cea7a3e02ff9954a74b3ef29ad895afaacff82a8c9cf63c8b90023d497a4ca8"
+  },
+  {
+    "dataset": "nasa_mdp_d2",
+    "project": "KC3",
+    "url": "https://raw.githubusercontent.com/klainfo/NASADefectDataset/master/CleanedData/MDP/D%27%27/KC3.arff",
+    "file": "data/raw/nasa/KC3.arff",
+    "sha256": "f93b7f373101d9e6390196d50f2e31510bc24474ad40a7609c2b69b43c3afa34"
+  },
+  {
+    "dataset": "nasa_mdp_d2",
+    "project": "MC1",
+    "url": "https://raw.githubusercontent.com/klainfo/NASADefectDataset/master/CleanedData/MDP/D%27%27/MC1.arff",
+    "file": "data/raw/nasa/MC1.arff",
+    "sha256": "d7a9047cf619596946e4c70fbd68053647e66d577791ac861119f7268ee8d732"
+  },
+  {
+    "dataset": "nasa_mdp_d2",
+    "project": "MC2",
+    "url": "https://raw.githubusercontent.com/klainfo/NASADefectDataset/master/CleanedData/MDP/D%27%27/MC2.arff",
+    "file": "data/raw/nasa/MC2.arff",
+    "sha256": "6e837f0e08f3e795f48be7d0a7ef802157a2ccb0ff08d8bacd8b567d438f4479"
+  },
+  {
+    "dataset": "nasa_mdp_d2",
+    "project": "MW1",
+    "url": "https://raw.githubusercontent.com/klainfo/NASADefectDataset/master/CleanedData/MDP/D%27%27/MW1.arff",
+    "file": "data/raw/nasa/MW1.arff",
+    "sha256": "93e86aa4e87d5cafb860e7eb99c1a50346dc6576d9815e190417ab9ae0b54c52"
+  },
+  {
+    "dataset": "nasa_mdp_d2",
+    "project": "PC1",
+    "url": "https://raw.githubusercontent.com/klainfo/NASADefectDataset/master/CleanedData/MDP/D%27%27/PC1.arff",
+    "file": "data/raw/nasa/PC1.arff",
+    "sha256": "9d1dd98f7f121206813cc0be4fcbc9fe4502ca42cca882e697bb300109046f21"
+  },
+  {
+    "dataset": "nasa_mdp_d2",
+    "project": "PC2",
+    "url": "https://raw.githubusercontent.com/klainfo/NASADefectDataset/master/CleanedData/MDP/D%27%27/PC2.arff",
+    "file": "data/raw/nasa/PC2.arff",
+    "sha256": "082bd53f6c16ddf84a1c11f5d3c2f37ad7d45734828de36ff327dd18f0d3be53"
+  },
+  {
+    "dataset": "nasa_mdp_d2",
+    "project": "PC3",
+    "url": "https://raw.githubusercontent.com/klainfo/NASADefectDataset/master/CleanedData/MDP/D%27%27/PC3.arff",
+    "file": "data/raw/nasa/PC3.arff",
+    "sha256": "71e058433f948fe331326d2d179472b7176115aa27d256657f60ad130160fe48"
+  },
+  {
+    "dataset": "nasa_mdp_d2",
+    "project": "PC4",
+    "url": "https://raw.githubusercontent.com/klainfo/NASADefectDataset/master/CleanedData/MDP/D%27%27/PC4.arff",
+    "file": "data/raw/nasa/PC4.arff",
+    "sha256": "4a55be821b0198c60caabf5b88e8c7e5254bb58be7fe4f097c9d2d2ee15c4f87"
+  },
+  {
+    "dataset": "nasa_mdp_d2",
+    "project": "PC5",
+    "url": "https://raw.githubusercontent.com/klainfo/NASADefectDataset/master/CleanedData/MDP/D%27%27/PC5.arff",
+    "file": "data/raw/nasa/PC5.arff",
+    "sha256": "de171fb89c5e6ce32f492fbd52d52ee4fd116ebdaf2738add76b41f63aaf641c"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "ant-1.3",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/ant/ant-1.3.csv",
+    "file": "data/raw/promise/ant-1.3.csv",
+    "sha256": "c1785e910711ffc12c091ed9618f03d76d4a3ae039fece2a4b45ab9f4766bcde"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "ant-1.4",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/ant/ant-1.4.csv",
+    "file": "data/raw/promise/ant-1.4.csv",
+    "sha256": "bd6c4b7994d3e79f4a5170677e00a45505b3f7dd5a69118eb6abe5c262e77ea3"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "ant-1.5",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/ant/ant-1.5.csv",
+    "file": "data/raw/promise/ant-1.5.csv",
+    "sha256": "a4ade5e382e81cbd991d97d7933dae2fcd3f598a4f9ed51f626c14a0967e5d57"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "ant-1.6",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/ant/ant-1.6.csv",
+    "file": "data/raw/promise/ant-1.6.csv",
+    "sha256": "afd8e0b1b6c5cfbf51fb153468ff3c2e179c94d4b5fb8474810b2ae2cc7fe208"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "ant-1.7",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/ant/ant-1.7.csv",
+    "file": "data/raw/promise/ant-1.7.csv",
+    "sha256": "073f0aaace855d0beb739f6897313d15d68ac11b3057d226b2b4209566ee0a2c"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "camel-1.0",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/camel/camel-1.0.csv",
+    "file": "data/raw/promise/camel-1.0.csv",
+    "sha256": "625c0ea186d8c4feae63cb20890fd4bf07cee78e7b525705f9987d2417c6654f"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "camel-1.2",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/camel/camel-1.2.csv",
+    "file": "data/raw/promise/camel-1.2.csv",
+    "sha256": "79c6bf73c7b5594a2784bbd90da98feb75b90d23209f3ce2e0b1caf10ce45ca7"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "camel-1.4",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/camel/camel-1.4.csv",
+    "file": "data/raw/promise/camel-1.4.csv",
+    "sha256": "df6f74df9281648b461f44e00ebb92c6fae8f8305e3f9530d7a48435c4edcdd7"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "camel-1.6",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/camel/camel-1.6.csv",
+    "file": "data/raw/promise/camel-1.6.csv",
+    "sha256": "e7e0f2fd9f8d6a45dd2cc55ca554cb69151024d4662160d4e7e84a9290b55bdc"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "ivy-1.0",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/ivy/ivy-1.0.csv",
+    "file": "data/raw/promise/ivy-1.0.csv",
+    "sha256": "a6d48c58e56ddcb14d499140bab90694fcd75b5934eefb511aa5f25b564d05c0"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "ivy-1.1",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/ivy/ivy-1.1.csv",
+    "file": "data/raw/promise/ivy-1.1.csv",
+    "sha256": "02c6f1ea801a5992f27fe2055fb29ed1aef1e60d0931b9a32c098bfc1c65da37"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "ivy-1.2",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/ivy/ivy-1.2.csv",
+    "file": "data/raw/promise/ivy-1.2.csv",
+    "sha256": "22ccd57239dd4bc2ac402e761e640f3555aaa4d95f2261ae0554014b5ec5ba4a"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "jedit-3.2",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/jedit/jedit-3.2.csv",
+    "file": "data/raw/promise/jedit-3.2.csv",
+    "sha256": "1d52cc39c598bc37446bb42c9c50c81e6cf92631b29fe3b3827758b33f1bb604"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "jedit-4.0",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/jedit/jedit-4.0.csv",
+    "file": "data/raw/promise/jedit-4.0.csv",
+    "sha256": "db6d6318bc52a38f5470d43a54d2004569221d7a95a8d46d4108a1044ec353c6"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "jedit-4.1",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/jedit/jedit-4.1.csv",
+    "file": "data/raw/promise/jedit-4.1.csv",
+    "sha256": "d43d3618d105df89cd10400e06dffe9be351598f2d8fee4593a61832a01fcf90"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "jedit-4.2",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/jedit/jedit-4.2.csv",
+    "file": "data/raw/promise/jedit-4.2.csv",
+    "sha256": "26bf6f6a44a75de1a91172c00cc7fc7894258220dc0a1ee0c0f55017770fdf96"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "jedit-4.3",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/jedit/jedit-4.3.csv",
+    "file": "data/raw/promise/jedit-4.3.csv",
+    "sha256": "64efd81aef1433b3a5137930c7416cbd28a6b43e091e9b0172f34b343917faff"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "log4j-1.0",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/log4j/log4j-1.0.csv",
+    "file": "data/raw/promise/log4j-1.0.csv",
+    "sha256": "d0033cab5774b526dc65043a97729251c3b4bbf1b984fd4c5b37a33368b9b0ac"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "log4j-1.1",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/log4j/log4j-1.1.csv",
+    "file": "data/raw/promise/log4j-1.1.csv",
+    "sha256": "7f81831b0c31a04b7264030d60d545f9f34ba540798986e79fae40f90ae50489"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "log4j-1.2",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/log4j/log4j-1.2.csv",
+    "file": "data/raw/promise/log4j-1.2.csv",
+    "sha256": "fdbec06172ba54b9947cea3d758a8bc1bf356cd3461139fb0e4ee02cb654d0cb"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "lucene-2.0",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/lucene/lucene-2.0.csv",
+    "file": "data/raw/promise/lucene-2.0.csv",
+    "sha256": "950deee3057729d6ee9f4fc2a8d89fc26afeff145ff46ea5029ed2b490c5fdad"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "lucene-2.2",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/lucene/lucene-2.2.csv",
+    "file": "data/raw/promise/lucene-2.2.csv",
+    "sha256": "eb6d96617c3ebc3082839ef3db4bd1cf494c58c50d22256b6bedce915e6a0c83"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "lucene-2.4",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/lucene/lucene-2.4.csv",
+    "file": "data/raw/promise/lucene-2.4.csv",
+    "sha256": "c496d5fc497bee5aa187502672d7a74034539377a18171504c4c32f04ec73fc0"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "poi-1.5",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/poi/poi-1.5.csv",
+    "file": "data/raw/promise/poi-1.5.csv",
+    "sha256": "e953d86dd32eb3741d51b50535875e811632368d0071a7bb6acab367d4d8bdb4"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "poi-2.0",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/poi/poi-2.0.csv",
+    "file": "data/raw/promise/poi-2.0.csv",
+    "sha256": "464e0bad577c56a950d3e567e622ed823f94b08f83d0317c675578db8dd01d9e"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "poi-2.5",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/poi/poi-2.5.csv",
+    "file": "data/raw/promise/poi-2.5.csv",
+    "sha256": "d87c72ea17e555b65bd08bf647dbcfc1cace62cfe6e63c5e21c1d8739ed4715d"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "poi-3.0",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/poi/poi-3.0.csv",
+    "file": "data/raw/promise/poi-3.0.csv",
+    "sha256": "494f05382479222bd1992949035829769b37df2df1cd7120d17a34d17d4a69cc"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "synapse-1.0",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/synapse/synapse-1.0.csv",
+    "file": "data/raw/promise/synapse-1.0.csv",
+    "sha256": "a81920b64e36e0b6f86008e43ce8f072d4c4d691bb5f28690eea90a03d45cac3"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "synapse-1.1",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/synapse/synapse-1.1.csv",
+    "file": "data/raw/promise/synapse-1.1.csv",
+    "sha256": "58927aebddacdc8f8d7c671f0cc524c04e3a83630cc1af8e3b939091fa32bdaf"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "synapse-1.2",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/synapse/synapse-1.2.csv",
+    "file": "data/raw/promise/synapse-1.2.csv",
+    "sha256": "11475c52a49e9a115d88c0da293933eea86e6ee57af61cfbfa6d7cf47a5a6cb0"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "velocity-1.4",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/velocity/velocity-1.4.csv",
+    "file": "data/raw/promise/velocity-1.4.csv",
+    "sha256": "09643f2f870f5462ed5e3d4373b4ddb29f01a42763e4c9aad685ad3cc6815c03"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "velocity-1.5",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/velocity/velocity-1.5.csv",
+    "file": "data/raw/promise/velocity-1.5.csv",
+    "sha256": "804c0717c1b1748633268b851bc3ad1169b4ae66874879cd6a37edad15d54b92"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "velocity-1.6",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/velocity/velocity-1.6.csv",
+    "file": "data/raw/promise/velocity-1.6.csv",
+    "sha256": "c2a8e807367f199d13f8bc8915e83dc85530b0ef8a9d20654a9ca6b569b8b6c8"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "xalan-2.4",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/xalan/xalan-2.4.csv",
+    "file": "data/raw/promise/xalan-2.4.csv",
+    "sha256": "4ed83c21d32673595dc2b298f137d01081c7b40e66a85246ad5daced208719fb"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "xalan-2.5",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/xalan/xalan-2.5.csv",
+    "file": "data/raw/promise/xalan-2.5.csv",
+    "sha256": "f883dfaf4c651eb483ae33b94097cd4f664fd906e9ecd4855bb5d3bc41d49c63"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "xalan-2.6",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/xalan/xalan-2.6.csv",
+    "file": "data/raw/promise/xalan-2.6.csv",
+    "sha256": "d0762fbd98ae3fa02431b106736147810bf28134ec308ee6bba5d20287fa8a1b"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "xalan-2.7",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/xalan/xalan-2.7.csv",
+    "file": "data/raw/promise/xalan-2.7.csv",
+    "sha256": "c7daddd0300bb4f1aebf3d267370b759c79a1d89aadb7409635a5c8192bc7714"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "xerces-1.1",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/xerces/xerces-1.1.csv",
+    "file": "data/raw/promise/xerces-1.1.csv",
+    "sha256": "0c7ce9fe6079418c6efd27db20b41efc99a5b574a98beb9ff3c7fadeb59490bd"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "xerces-1.2",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/xerces/xerces-1.2.csv",
+    "file": "data/raw/promise/xerces-1.2.csv",
+    "sha256": "b88c9bf9ffd9396644d1057d03456c26e2c50e9accac8ba01ef683155776b40d"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "xerces-1.3",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/xerces/xerces-1.3.csv",
+    "file": "data/raw/promise/xerces-1.3.csv",
+    "sha256": "9fe65a9e2ae2af31339b9173a2482690e86014c3e6cff34cc50e475f33a1cd3a"
+  },
+  {
+    "dataset": "promise_ck",
+    "project": "xerces-1.4.4",
+    "url": "https://raw.githubusercontent.com/feiwww/PROMISE-backup/master/bug-data/xerces/xerces-1.4.4.csv",
+    "file": "data/raw/promise/xerces-1.4.4.csv",
+    "sha256": "516c43c386e72dddebd2144e53043a915893ad07d2ff94ae9888ececd1a0d17a"
+  }
+]

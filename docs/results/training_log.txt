@@ -1,0 +1,23 @@
+WARNING app.ml.data_preprocessor: Skipping PC2.csv: Missing NASA MDP columns: ['LOC_BLANK']
+[function] data: 15184 rows, 19.1% defective, 11 projects
+[function] random_forest+smote              AUC=0.734  (307s)
+[function] random_forest+balanced           AUC=0.727  (142s)
+[function] logistic_regression+smote        AUC=0.717  (4s)
+[function] logistic_regression+balanced     AUC=0.717  (3s)
+[function] mlp+smote                        AUC=0.709  (68s)
+[function] mlp+balanced                     AUC=0.716  (61s)
+[function] cross-project (LOPO) mean AUC=0.695 over 11 projects
+[function] saved function_v1_rf_smote_20261104073305.joblib (v1, active=True)
+[function] best=random_forest+smote  done in 809s
+[class] data: 8466 rows, 33.7% defective, 37 projects
+[class] random_forest+smote              AUC=0.741  (79s)
+[class] random_forest+balanced           AUC=0.740  (49s)
+[class] logistic_regression+smote        AUC=0.700  (2s)
+[class] logistic_regression+balanced     AUC=0.701  (1s)
+[class] mlp+smote                        AUC=0.719  (17s)
+[class] mlp+balanced                     AUC=0.721  (17s)
+[class] cross-project (LOPO) mean AUC=0.678 over 11 projects
+[class] saved class_v1_rf_smote_20261104073649.joblib (v1, active=True)
+[class] best=random_forest+smote  done in 223s
+Wrote docs\results\RESULTS.md
+[exited with code 0]

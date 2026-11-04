@@ -1,0 +1,30 @@
+{
+  "level": "function",
+  "rows_in": 16425,
+  "dropped_na": 0,
+  "dropped_invalid": 132,
+  "dropped_duplicates": 1087,
+  "dropped_conflicts": 22,
+  "dropped_projects": [],
+  "rows_out": 15184,
+  "positive_rate": 0.1905295047418335,
+  "projects": [
+    "CM1",
+    "JM1",
+    "KC1",
+    "KC3",
+    "MC1",
+    "MC2",
+    "MW1",
+    "PC1",
+    "PC3",
+    "PC4",
+    "PC5"
+  ],
+  "skipped_files": [
+    {
+      "file": "PC2.csv",
+      "reason": "Missing NASA MDP columns: ['LOC_BLANK']"
+    }
+  ]
+}

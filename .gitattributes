@@ -1,0 +1,5 @@
+* text=auto
+# Vendored datasets must stay byte-identical to match the sha256 in data/raw/manifest.json
+data/raw/** -text
+*.joblib binary
+*.png binary

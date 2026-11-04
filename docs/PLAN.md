@@ -47,7 +47,14 @@ A model is only useful if the extractor can produce the same features at inferen
 | `ev(g)`, `iv(g)` | **Dropped** — not reliably extractable |
 
 **Class-level model (PROMISE CK — e.g. ant, camel, jedit, log4j, lucene, xalan, ...)**
-Features: `wmc, dit, noc, cbo, rfc, lcom, loc, max_cc, avg_cc` (others such as `dam, moa, cam, ic, cbm` dropped as not extractable).
+Features: `wmc, dit, noc, cbo, rfc, lcom, loc, max_cc, avg_cc, ce, npm, amc, lcom3` (others such as `ca, dam, moa, mfa, cam, ic, cbm` dropped as not extractable).
+
+### 2.1b Data-cleaning decisions (Phase 2, user-approved 2026-11-04)
+- **NASA PC2 skipped**: D'' PC2 lacks `LOC_BLANK`; skipping it keeps the feature for the other 11 projects.
+- **Conflicting-label duplicates removed (both levels)**: identical metric vectors with contradictory labels are dropped entirely (same principle as Shepperd's D'' "inconsistent instances"). In PROMISE ~20 % of rows were affected.
+- **Implausibly-labelled releases removed (class level)**: releases with > 75 % defective classes, evaluated *after* conflict removal. Final run excluded xalan-2.7 (99.8 %), log4j-1.2 (94.2 %), xerces-1.4.4 (90.0 %), velocity-1.5 (77.7 %). (poi-2.5 was 78 % before conflict removal but falls below 75 % after, so it is kept.)
+- **+4 class features** (`ce, npm, amc, lcom3`) after an ablation showed +0.02 AUC.
+- Evidence (5-fold RF AUC): as-is 0.567 → conflicts removed 0.714 → + releases removed 0.723 → + 4 features 0.743.
 
 ### 2.2 Per-file score
 - Function units → function model probabilities; class units → class model probabilities.
