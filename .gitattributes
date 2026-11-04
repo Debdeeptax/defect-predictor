@@ -3,3 +3,7 @@
 data/raw/** -text
 *.joblib binary
 *.png binary
+*.pdf binary
+*.zip binary
+*.ico binary
+*.woff2 binary
