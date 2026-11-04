@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Log in{% endblock %}
+{% block page_id %}login{% endblock %}
+{% block content %}
+<div class="card auth-card">
+  <div class="card-body p-4">
+    <h1 class="h4 mb-1" id="login-heading" data-testid="login-heading">Log in</h1>
+    <p class="text-secondary small mb-4">Software Defect Prediction System</p>
+    <form method="post" action="{{ url_for('auth.login', next=request.args.get('next')) }}" novalidate
+          id="login-form" data-testid="login-form">
+      {{ form.hidden_tag() }}
+      <div class="mb-3">
+        <label for="login-email-input" class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" id="login-email-input" data-testid="login-email-input"
+               value="{{ form.email.data or '' }}" autocomplete="username" required autofocus>
+      </div>
+      <div class="mb-3">
+        <label for="login-password-input" class="form-label">Password</label>
+        <input type="password" name="password" class="form-control" id="login-password-input"
+               data-testid="login-password-input" autocomplete="current-password" required>
+      </div>
+      <div class="form-check mb-3">
+        <input type="checkbox" name="remember" class="form-check-input" id="login-remember-checkbox"
+               data-testid="login-remember-checkbox" value="y">
+        <label for="login-remember-checkbox" class="form-check-label">Remember me</label>
+      </div>
+      <button type="submit" class="btn btn-primary w-100" id="login-submit-btn" data-testid="login-submit-btn">Log in</button>
+    </form>
+    <p class="small text-center mt-3 mb-0">No account?
+      <a href="{{ url_for('auth.register') }}" id="login-register-link" data-testid="login-register-link">Register</a></p>
+  </div>
+</div>
+{% endblock %}

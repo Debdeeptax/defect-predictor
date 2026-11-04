@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% from "macros.html" import risk_badge %}
+{% block title %}Compare runs{% endblock %}
+{% block page_id %}compare{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3" id="compare-heading" data-testid="compare-heading">Compare runs</h1>
+{% if not has_choices %}
+<div class="alert alert-info" id="compare-empty" data-testid="compare-empty">At least two completed reports are needed to compare.</div>
+{% else %}
+<div class="card mb-3"><div class="card-body">
+  <form method="get" class="row g-2 align-items-end" id="compare-form" data-testid="compare-form">
+    <div class="col-md-5">
+      <label for="compare-a-select" class="form-label small">Baseline (A)</label>
+      <select name="a" class="form-select" id="compare-a-select" data-testid="compare-a-select">
+        {% for value, label in form.a.choices %}<option value="{{ value }}" {% if a and a.id == value %}selected{% endif %}>{{ label }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="col-md-5">
+      <label for="compare-b-select" class="form-label small">Compared (B)</label>
+      <select name="b" class="form-select" id="compare-b-select" data-testid="compare-b-select">
+        {% for value, label in form.b.choices %}<option value="{{ value }}" {% if (b and b.id == value) or (not b and loop.index == 1) %}selected{% endif %}>{{ label }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2 d-grid">
+      <button type="submit" class="btn btn-primary" id="compare-submit-btn" data-testid="compare-submit-btn">Compare</button>
+    </div>
+  </form>
+</div></div>
+{% endif %}
+
+{% if result %}
+{% set s = result.summary %}
+<span class="visually-hidden" id="status-done" data-testid="status-done">Comparison complete</span>
+<div class="row g-3 mb-3">
+  {% for key, label, value, cls in [('common', 'Files in both', s.common, ''), ('worse', 'Risk increased', s.worse, 'text-danger'),
+                                    ('better', 'Risk decreased', s.better, 'text-success'), ('added', 'Added files', s.added, ''),
+                                    ('removed', 'Removed files', s.removed, ''), ('mean-delta', 'Mean Δ probability', '%+.3f' | format(s.mean_delta), '')] %}
+  <div class="col-6 col-md-4 col-xl-2"><div class="card stat-card h-100"><div class="card-body">
+    <div class="stat-value {{ cls }}" id="compare-{{ key }}" data-testid="compare-{{ key }}">{{ value }}</div>
+    <div class="stat-label">{{ label }}</div></div></div></div>
+  {% endfor %}
+</div>
+<div class="card">
+  <div class="card-header bg-white small">A = #{{ a.id }} {{ a.title }} · B = #{{ b.id }} {{ b.title }}</div>
+  <div class="table-responsive">
+  <table class="table table-sm align-middle mb-0" id="compare-table" data-testid="compare-table" data-sortable>
+    <thead class="table-light"><tr>
+      <th class="sortable" data-key="file"><button type="button" id="compare-sort-file" data-testid="compare-sort-file">File<span class="sort-icon"></span></button></th>
+      <th>Status</th><th>Risk A</th><th>Risk B</th>
+      <th class="sortable text-end" data-key="prob-a" data-type="number"><button type="button" id="compare-sort-prob-a" data-testid="compare-sort-prob-a">Prob. A<span class="sort-icon"></span></button></th>
+      <th class="sortable text-end" data-key="prob-b" data-type="number"><button type="button" id="compare-sort-prob-b" data-testid="compare-sort-prob-b">Prob. B<span class="sort-icon"></span></button></th>
+      <th class="sortable text-end" data-key="delta" data-type="number"><button type="button" id="compare-sort-delta" data-testid="compare-sort-delta">Δ<span class="sort-icon"></span></button></th>
+      <th>Change</th></tr></thead>
+    <tbody>
+    {% for r in result.rows %}
+      {% set key = r.path | testid %}
+      <tr id="compare-row-{{ key }}" data-testid="compare-row-{{ key }}" data-row data-index="{{ loop.index0 }}">
+        <td class="file-path" data-sort-value="{{ r.path | lower }}">{{ r.path }}</td>
+        <td>{{ r.status }}</td>
+        <td>{% if r.risk_a %}{{ risk_badge(r.risk_a, key, 'compare-risk-a') }}{% else %}–{% endif %}</td>
+        <td>{% if r.risk_b %}{{ risk_badge(r.risk_b, key, 'compare-risk-b') }}{% else %}–{% endif %}</td>
+        <td class="text-end font-monospace" data-sort-value="{{ r.probability_a if r.probability_a is not none else -1 }}">{{ '%.3f' | format(r.probability_a) if r.probability_a is not none else '–' }}</td>
+        <td class="text-end font-monospace" data-sort-value="{{ r.probability_b if r.probability_b is not none else -1 }}">{{ '%.3f' | format(r.probability_b) if r.probability_b is not none else '–' }}</td>
+        <td class="text-end font-monospace {{ 'text-danger' if (r.delta or 0) > 0 else 'text-success' if (r.delta or 0) < 0 else '' }}"
+            data-sort-value="{{ r.delta if r.delta is not none else 0 }}" data-testid="compare-delta-{{ key }}">{{ '%+.3f' | format(r.delta) if r.delta is not none else '–' }}</td>
+        <td data-testid="compare-change-{{ key }}">{{ r.risk_change }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

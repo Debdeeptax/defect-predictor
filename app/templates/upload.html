@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Analyze code{% endblock %}
+{% block page_id %}upload{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3" id="upload-heading" data-testid="upload-heading">Analyze code</h1>
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="card"><div class="card-body p-4">
+      <form method="post" enctype="multipart/form-data" novalidate id="upload-form" data-testid="upload-form"
+            data-loading="Extracting metrics and predicting…">
+        {{ form.hidden_tag() }}
+        <fieldset class="mb-3">
+          <legend class="form-label fs-6">Source</legend>
+          <div class="btn-group w-100" role="group" aria-label="Source type">
+            <input type="radio" class="btn-check" name="source" value="file" id="source-file-radio"
+                   data-testid="source-file-radio" {% if form.source.data != 'git' %}checked{% endif %}>
+            <label class="btn btn-outline-primary" for="source-file-radio">File or ZIP</label>
+            <input type="radio" class="btn-check" name="source" value="git" id="source-git-radio"
+                   data-testid="source-git-radio" {% if form.source.data == 'git' %}checked{% endif %}>
+            <label class="btn btn-outline-primary" for="source-git-radio">Git repository</label>
+          </div>
+        </fieldset>
+
+        <div class="mb-3" data-source-panel="file" id="file-panel" data-testid="file-panel">
+          <label for="upload-file-input" class="form-label">Source file or .zip archive</label>
+          <input type="file" name="file" class="form-control" id="upload-file-input" data-testid="upload-file-input">
+          <div class="form-text">Max {{ max_mb }} MB. A single source file, or a ZIP of a project.</div>
+        </div>
+
+        <div class="mb-3" data-source-panel="git" id="git-panel" data-testid="git-panel">
+          <label for="git-url-input" class="form-label">Public Git URL (HTTPS)</label>
+          <input type="url" name="git_url" class="form-control" id="git-url-input" data-testid="git-url-input"
+                 placeholder="https://github.com/owner/repository" value="{{ form.git_url.data or '' }}">
+          <div class="form-text">Allowed hosts: {{ git_hosts | join(', ') }}. Shallow clone of the default branch.</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="report-title-input" class="form-label">Report title <span class="text-secondary">(optional)</span></label>
+          <input type="text" name="title" class="form-control" id="report-title-input" data-testid="report-title-input"
+                 maxlength="200" value="{{ form.title.data or '' }}">
+        </div>
+        <button type="submit" class="btn btn-primary" id="analyze-btn" data-testid="analyze-btn">Analyze</button>
+      </form>
+    </div></div>
+  </div>
+  <div class="col-lg-5">
+    <div class="card"><div class="card-body small">
+      <h2 class="h6">What happens</h2>
+      <ol class="ps-3 mb-3">
+        <li>Your code is unpacked into an isolated workspace (it is parsed, never executed).</li>
+        <li>Static metrics are extracted per function and class: McCabe complexity, Halstead, LOC, and CK OO metrics (Python).</li>
+        <li>The active models estimate a defect probability for each unit; a file's risk is that of its riskiest unit.</li>
+        <li>The workspace is deleted; only the metrics and predictions are kept in the report.</li>
+      </ol>
+      <h2 class="h6">Supported languages</h2>
+      <p class="mb-0" id="supported-languages" data-testid="supported-languages">
+        <strong>Full metrics:</strong> python.<br>
+        <strong>Partial metrics</strong> (no OO metrics): {{ languages | reject('equalto', 'python') | join(', ') }}.
+      </p>
+    </div></div>
+  </div>
+</div>
+{% endblock %}

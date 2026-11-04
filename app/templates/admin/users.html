@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Users{% endblock %}
+{% block page_id %}admin-users{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3" id="users-heading" data-testid="users-heading">Users</h1>
+<div class="card">
+<div class="table-responsive">
+<table class="table align-middle mb-0" id="users-table" data-testid="users-table">
+  <thead class="table-light"><tr><th>#</th><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Last login</th><th class="text-end">Actions</th></tr></thead>
+  <tbody>
+  {% for u in users %}
+    {% set key = u.email | testid %}
+    <tr id="user-row-{{ key }}" data-testid="user-row-{{ key }}">
+      <td>{{ u.id }}</td>
+      <td>{{ u.name }}{% if u.id == current_user.id %} <span class="badge text-bg-light">you</span>{% endif %}</td>
+      <td class="small">{{ u.email }}</td>
+      <td>
+        <form method="post" action="{{ url_for('admin.change_role', user_id=u.id) }}" class="d-flex gap-2 m-0" id="role-form-{{ key }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <select name="role" class="form-select form-select-sm" style="width:auto" aria-label="Role for {{ u.email }}"
+                  id="role-select-{{ key }}" data-testid="role-select-{{ key }}">
+            {% for value, label in role_form.role.choices %}<option value="{{ value }}" {% if u.role == value %}selected{% endif %}>{{ label }}</option>{% endfor %}
+          </select>
+          <button type="submit" class="btn btn-sm btn-outline-primary" id="role-save-btn-{{ key }}" data-testid="role-save-btn-{{ key }}">Save</button>
+        </form>
+      </td>
+      <td><span class="badge text-bg-{{ 'success' if u.active else 'secondary' }}" id="user-status-{{ key }}"
+                data-testid="user-status-{{ key }}">{{ 'active' if u.active else 'inactive' }}</span></td>
+      <td class="small">{{ u.last_login_at | dt }}</td>
+      <td class="text-end">
+        <form method="post" action="{{ url_for('admin.toggle_user', user_id=u.id) }}" class="m-0" id="toggle-form-{{ key }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-sm {{ 'btn-outline-danger' if u.active else 'btn-outline-success' }}"
+                  id="toggle-active-btn-{{ key }}" data-testid="toggle-active-btn-{{ key }}"
+                  {% if u.id == current_user.id %}disabled{% endif %}>{{ 'Deactivate' if u.active else 'Activate' }}</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+</div>
+{% endblock %}

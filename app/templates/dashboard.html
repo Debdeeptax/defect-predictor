@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% from "macros.html" import status_marker %}
+{% block title %}Dashboard{% endblock %}
+{% block page_id %}dashboard{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+  <div>
+    <h1 class="h3 mb-0" id="dashboard-heading" data-testid="dashboard-heading">Dashboard</h1>
+    <div class="text-secondary small" id="dashboard-scope" data-testid="dashboard-scope">
+      {{ 'All users' if current_user.can_view_all_reports else 'Your submissions' }}
+    </div>
+  </div>
+  {% if current_user.can_submit %}
+  <a href="{{ url_for('upload.upload') }}" class="btn btn-primary" id="dashboard-analyze-btn" data-testid="dashboard-analyze-btn">Analyze code</a>
+  {% endif %}
+</div>
+
+<div class="row g-3 mb-4">
+  {% for key, label, cls in [('reports', 'Reports', ''), ('files', 'Files analysed', ''),
+                             ('high', 'High-risk files', 'text-danger'), ('medium', 'Medium-risk files', 'text-warning'),
+                             ('low', 'Low-risk files', 'text-success')] %}
+  <div class="col-6 col-md-4 col-xl">
+    <div class="card stat-card h-100"><div class="card-body">
+      <div class="stat-value {{ cls }}" id="stat-{{ key }}" data-testid="stat-{{ key }}">{{ stats[key] }}</div>
+      <div class="stat-label">{{ label }}</div>
+    </div></div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-8">
+    <div class="card h-100">
+      <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <span class="fw-semibold">Recent reports</span>
+        <a href="{{ url_for('reports.list_reports') }}" class="small" id="dashboard-all-reports-link" data-testid="dashboard-all-reports-link">View all</a>
+      </div>
+      {% if recent %}
+      <div class="table-responsive">
+      <table class="table table-hover mb-0" id="recent-reports-table" data-testid="recent-reports-table">
+        <thead><tr><th>#</th><th>Title</th>{% if current_user.can_view_all_reports %}<th>Owner</th>{% endif %}<th>Status</th><th class="text-end">High / Med / Low</th></tr></thead>
+        <tbody>
+        {% for r in recent %}
+          <tr id="recent-report-row-{{ r.id }}" data-testid="recent-report-row-{{ r.id }}">
+            <td>{{ r.id }}</td>
+            <td><a href="{{ url_for('reports.detail', report_id=r.id) }}" id="recent-report-link-{{ r.id }}" data-testid="recent-report-link-{{ r.id }}">{{ r.title }}</a></td>
+            {% if current_user.can_view_all_reports %}<td class="small">{{ r.user.email }}</td>{% endif %}
+            <td>{{ r.status }}</td>
+            <td class="text-end"><span class="text-danger">{{ r.n_high }}</span> / <span class="text-warning">{{ r.n_medium }}</span> / <span class="text-success">{{ r.n_low }}</span></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      </div>
+      {% else %}
+      <div class="card-body text-secondary" id="dashboard-empty" data-testid="dashboard-empty">
+        No reports yet.{% if current_user.can_submit %} <a href="{{ url_for('upload.upload') }}" id="dashboard-empty-upload-link" data-testid="dashboard-empty-upload-link">Analyze your first project</a>.{% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card h-100" id="model-status-card" data-testid="model-status-card">
+      <div class="card-header bg-white fw-semibold">Active models</div>
+      <ul class="list-group list-group-flush">
+        {% for level in ('function', 'class') %}
+        {% set m = models.get(level) %}
+        <li class="list-group-item" id="model-status-{{ level }}" data-testid="model-status-{{ level }}">
+          <div class="small text-secondary text-capitalize">{{ level }} level</div>
+          {% if m %}
+            <div class="fw-semibold">v{{ m.version }} · {{ m.display_name }}</div>
+            <div class="small">CV ROC-AUC {{ '%.3f' | format(m.cv_auc) if m.cv_auc is not none else '–' }}</div>
+          {% else %}
+            <div class="text-danger" data-testid="model-missing-{{ level }}">No active model</div>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

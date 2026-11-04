@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% from "macros.html" import risk_badge, prob_bar, status_marker %}
+{% block title %}Report #{{ report.id }}{% endblock %}
+{% block page_id %}report-detail{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3">
+  <div>
+    <div class="small text-secondary">Report #<span id="report-id" data-testid="report-id">{{ report.id }}</span></div>
+    <h1 class="h3 mb-1" id="report-title" data-testid="report-title">{{ report.title }}</h1>
+    <div class="small text-secondary" id="report-meta" data-testid="report-meta">
+      {{ report.submission.source_type }} · <span class="file-path">{{ report.submission.source_name }}</span>
+      {% if report.submission.meta.get('commit') %} · commit {{ report.submission.meta.commit[:10] }}{% endif %}
+      · by {{ report.user.email }} · {{ report.created_at | dt }}
+    </div>
+  </div>
+  <div class="d-flex flex-wrap gap-2 align-items-center">
+    {{ status_marker(report.status) }}
+    {% if report.is_done %}
+    <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('reports.export_csv', report_id=report.id) }}" id="export-csv-btn" data-testid="export-csv-btn">CSV</a>
+    <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('reports.export_csv', report_id=report.id, level='unit') }}" id="export-units-csv-btn" data-testid="export-units-csv-btn">Units CSV</a>
+    <a class="btn btn-primary btn-sm" href="{{ url_for('reports.export_pdf', report_id=report.id) }}" id="export-pdf-btn" data-testid="export-pdf-btn">PDF</a>
+    {% endif %}
+  </div>
+</div>
+
+{% if report.status == 'failed' %}
+<div class="alert alert-danger" id="report-error" data-testid="report-error">{{ report.error }}</div>
+{% elif report.is_done %}
+{% set s = payload.summary %}
+<div class="row g-3 mb-3">
+  {% for key, label, value, cls in [('files', 'Files', s.files, ''), ('high', 'High risk', s.risk_counts.High, 'text-danger'),
+                                    ('medium', 'Medium risk', s.risk_counts.Medium, 'text-warning'), ('low', 'Low risk', s.risk_counts.Low, 'text-success'),
+                                    ('max-prob', 'Max probability', '%.3f' | format(s.max_probability), ''), ('units', 'Units scored', s.units, '')] %}
+  <div class="col-6 col-md-4 col-xl-2">
+    <div class="card stat-card h-100"><div class="card-body">
+      <div class="stat-value {{ cls }}" id="summary-{{ key }}" data-testid="summary-{{ key }}">{{ value }}</div>
+      <div class="stat-label">{{ label }}</div>
+    </div></div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="row g-3 mb-3">
+  <div class="col-lg-4">
+    <div class="card h-100"><div class="card-body">
+      <h2 class="h6">Risk distribution</h2>
+      <div class="chart-box"><canvas id="risk-chart" data-testid="risk-chart" role="img"
+           aria-label="High {{ s.risk_counts.High }}, Medium {{ s.risk_counts.Medium }}, Low {{ s.risk_counts.Low }} files"></canvas></div>
+    </div></div>
+  </div>
+  <div class="col-lg-8">
+    <div class="card h-100"><div class="card-body">
+      <h2 class="h6">Riskiest files</h2>
+      <div class="chart-box"><canvas id="top-files-chart" data-testid="top-files-chart" role="img"
+           aria-label="Defect probability of the riskiest files"></canvas></div>
+    </div></div>
+  </div>
+</div>
+
+{% for w in payload.warnings %}
+<div class="alert alert-warning py-2 small" id="report-warning-{{ loop.index }}" data-testid="report-warning">{{ w }}</div>
+{% endfor %}
+
+<div class="card mb-3">
+  <div class="card-header bg-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+    <span class="fw-semibold">Files ranked by defect probability</span>
+    <span class="small text-secondary">Medium ≥ {{ payload.thresholds.medium }}, High ≥ {{ payload.thresholds.high }} · click a column to sort</span>
+  </div>
+  <div class="table-responsive">
+  <table class="table table-report mb-0" id="report-table" data-testid="report-table" data-sortable data-sorted-by="probability:descending">
+    <thead class="table-light">
+      <tr>
+        <th class="sortable" data-key="rank" data-type="number"><button type="button" id="sort-rank" data-testid="sort-rank">#<span class="sort-icon"></span></button></th>
+        <th class="sortable col-file" data-key="file"><button type="button" id="sort-file" data-testid="sort-file">File<span class="sort-icon"></span></button></th>
+        <th class="sortable" data-key="language"><button type="button" id="sort-language" data-testid="sort-language">Lang<span class="sort-icon"></span></button></th>
+        <th class="sortable" data-key="risk" data-type="number"><button type="button" id="sort-risk" data-testid="sort-risk">Risk<span class="sort-icon"></span></button></th>
+        <th class="sortable" data-key="probability" data-type="number" aria-sort="descending"><button type="button" id="sort-probability" data-testid="sort-probability">Probability<span class="sort-icon"></span></button></th>
+        <th class="sortable" data-key="loc" data-type="number"><button type="button" id="sort-loc" data-testid="sort-loc">LOC<span class="sort-icon"></span></button></th>
+        <th class="sortable" data-key="max-cc" data-type="number"><button type="button" id="sort-max-cc" data-testid="sort-max-cc">Max CC<span class="sort-icon"></span></button></th>
+        <th>Top contributing metrics</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for f in payload.files %}
+      {% set key = f.path | testid %}
+      <tr id="report-row-{{ key }}" data-testid="report-row-{{ key }}" data-row data-index="{{ loop.index0 }}" data-path="{{ f.path }}">
+        <td data-sort-value="{{ f.rank }}">{{ f.rank }}</td>
+        <td data-sort-value="{{ f.path | lower }}"><span class="file-path" data-testid="file-path-{{ key }}">{{ f.path }}</span>
+          {% if f.driver %}<div class="small text-secondary">driver: {{ f.driver.unit | truncate(48) }} (line {{ f.driver.start_line }})</div>{% endif %}</td>
+        <td data-sort-value="{{ f.language }}">{{ f.language }}{% if f.partial %}<span class="text-secondary" title="Partial metrics">*</span>{% endif %}</td>
+        <td data-sort-value="{{ {'High': 3, 'Medium': 2, 'Low': 1}[f.risk] }}">{{ risk_badge(f.risk, key) }}</td>
+        <td data-sort-value="{{ f.probability }}" id="prob-{{ key }}" data-testid="prob-{{ key }}">{{ prob_bar(f.probability) }}</td>
+        <td data-sort-value="{{ f.metrics.loc }}">{{ f.metrics.loc | int }}</td>
+        <td data-sort-value="{{ f.metrics.max_cc }}">{{ f.metrics.max_cc | int }}</td>
+        <td>
+          {% for m in f.top_metrics[:3] %}
+          <span class="metric-chip {{ 'up' if m.contribution > 0 else 'down' }}" title="SHAP contribution {{ '%+.3f' | format(m.contribution) }} ({{ f.explanation_method }})">
+            {{ m.label }} = {{ m.value | num }} {{ '▲' if m.contribution > 0 else '▼' }}</span>
+          {% endfor %}
+        </td>
+      </tr>
+      <tr class="unit-detail-row" data-detail-for="report-row-{{ key }}">
+        <td></td>
+        <td colspan="7">
+          <details class="units" id="units-{{ key }}" data-testid="units-{{ key }}">
+            <summary id="units-toggle-{{ key }}" data-testid="units-toggle-{{ key }}">{{ f.units | length }} unit(s) — per function / class predictions</summary>
+            <table class="table table-sm small mt-2 mb-1" data-testid="units-table-{{ key }}">
+              <thead><tr><th>Unit</th><th>Level</th><th>Line</th><th>Risk</th><th>Probability</th><th>Top metrics</th></tr></thead>
+              <tbody>
+              {% for u in f.units %}
+                <tr data-testid="unit-row-{{ key }}-{{ loop.index }}">
+                  <td class="unit-name">{{ u.unit }}</td><td>{{ u.level }}</td><td>{{ u.start_line }}</td>
+                  <td>{{ risk_badge(u.risk, key ~ '-' ~ loop.index, 'unit-risk-badge') }}</td>
+                  <td class="font-monospace">{{ '%.3f' | format(u.probability) }}</td>
+                  <td title="{{ u.explanation_method }}">{% for m in u.top_metrics %}<span class="metric-chip {{ 'up' if m.contribution > 0 else 'down' }}">{{ m.label }} = {{ m.value | num }} {{ '▲' if m.contribution > 0 else '▼' }}</span>{% endfor %}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </details>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <div class="card-footer bg-white small text-secondary">
+    ▲ raises / ▼ lowers the defect probability (SHAP). * partial metrics (non-Python).
+    Explanations: {{ s.exact_explanations }} exact SHAP (file drivers), others fast approximation.
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-6">
+    <div class="card h-100" id="models-used-card" data-testid="models-used-card"><div class="card-body small">
+      <h2 class="h6">Models used</h2>
+      {% for level, m in payload.models.items() %}
+      <div><span class="text-capitalize">{{ level }}</span>:
+        {% if m %}v{{ m.version }} {{ m.display_name }} (CV AUC {{ '%.3f' | format(m.cv_auc) }}){% else %}<span class="text-danger">not available</span>{% endif %}</div>
+      {% endfor %}
+      <div class="mt-2 text-secondary">Trained on NASA MDP (C/Java functions) and PROMISE (Java classes): read scores on other code as relative rankings.</div>
+    </div></div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card h-100" id="skipped-card" data-testid="skipped-card"><div class="card-body small">
+      <h2 class="h6">Skipped files (<span id="skipped-count" data-testid="skipped-count">{{ s.skipped_count }}</span>)</h2>
+      {% if payload.skipped %}
+      <ul class="mb-0" id="skipped-list" data-testid="skipped-list">
+        {% for x in payload.skipped[:50] %}<li><span class="file-path">{{ x.path }}</span> — {{ x.reason }}</li>{% endfor %}
+      </ul>
+      {% else %}<div class="text-secondary">None.</div>{% endif %}
+    </div></div>
+  </div>
+</div>
+<script type="application/json" id="report-data">{{ {
+  'risk_counts': s.risk_counts,
+  'top': payload.files[:15] | map(attribute='path') | list,
+  'top_probs': payload.files[:15] | map(attribute='probability') | list,
+  'top_risks': payload.files[:15] | map(attribute='risk') | list,
+  'thresholds': payload.thresholds} | tojson }}</script>
+{% else %}
+<div class="alert alert-secondary" id="report-pending" data-testid="report-pending">This analysis is still running.</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{% if report.is_done %}
+<script src="{{ url_for('static', filename='vendor/chart.umd.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/report.js') }}"></script>
+{% endif %}
+{% endblock %}

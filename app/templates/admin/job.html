@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block head_extra %}{% if not job.is_finished %}<meta http-equiv="refresh" content="3">{% endif %}{% endblock %}
+{% block title %}Training job #{{ job.id }}{% endblock %}
+{% block page_id %}admin-job{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <h1 class="h3 mb-0" id="job-heading" data-testid="job-heading">Training job #{{ job.id }}</h1>
+  <a href="{{ url_for('admin.models') }}" class="btn btn-outline-secondary btn-sm" id="back-to-models-btn" data-testid="back-to-models-btn">Back to models</a>
+</div>
+<div class="card mb-3"><div class="card-body">
+  <div class="d-flex flex-wrap gap-3 align-items-center">
+    <span>Status:
+      <span class="badge text-bg-{{ {'done': 'success', 'failed': 'danger'}.get(job.status, 'info') }}" id="job-status"
+            data-testid="job-status" data-status="{{ job.status }}">{{ job.status }}</span></span>
+    {% if job.status == 'done' %}
+      <span class="badge text-bg-success" id="status-done" data-testid="status-done">Training complete</span>
+    {% elif job.status == 'failed' %}
+      <span class="badge text-bg-danger" id="status-failed" data-testid="status-failed">Training failed</span>
+    {% else %}
+      <span class="d-inline-flex align-items-center gap-2 text-secondary small" id="job-running" data-testid="loading-indicator">
+        <span class="spinner-border spinner-border-sm"></span> running — this page refreshes every 3 s</span>
+    {% endif %}
+  </div>
+  <div class="small text-secondary mt-2">{{ job.level }} level · source {{ job.source }} · CV {{ job.folds }}×{{ job.repeats }} ·
+    started {{ job.created_at | dt }} by {{ job.started_by.email }}{% if job.finished_at %} · finished {{ job.finished_at | dt }}{% endif %}</div>
+</div></div>
+
+{% if job.error %}<div class="alert alert-danger" id="job-error" data-testid="job-error">{{ job.error }}</div>{% endif %}
+
+{% if job.status == 'done' %}
+{% set r = job.result %}
+<div class="alert alert-success" id="job-result" data-testid="job-result">
+  Saved <strong>v{{ r.version }}</strong> ({{ r.display_name }}) — CV ROC-AUC
+  <strong>{{ '%.3f' | format(r.cv_auc.mean) }} ± {{ '%.3f' | format(r.cv_auc.std) }}</strong>.
+  {{ 'Activated.' if r.activated else 'Not activated (activate it on the Models page).' }}
+</div>
+<div class="card mb-3">
+  <div class="card-header bg-white fw-semibold">Candidate comparison</div>
+  <div class="table-responsive">
+  <table class="table table-sm mb-0" id="job-summary-table" data-testid="job-summary-table">
+    <thead class="table-light"><tr><th>Model</th><th class="text-end">ROC-AUC</th><th class="text-end">F1</th><th class="text-end">Precision</th><th class="text-end">Recall</th></tr></thead>
+    <tbody>
+    {% for row in r.summary %}
+      <tr class="{{ 'table-success' if row.model == r.best }}"><td>{{ row.model }}</td>
+        <td class="text-end">{{ '%.3f' | format(row.roc_auc_mean) }}</td><td class="text-end">{{ '%.3f' | format(row.f1_mean) }}</td>
+        <td class="text-end">{{ '%.3f' | format(row.precision_mean) }}</td><td class="text-end">{{ '%.3f' | format(row.recall_mean) }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endif %}
+
+<div class="card"><div class="card-header bg-white fw-semibold">Log</div>
+  <div class="card-body"><pre class="log-view mb-0" id="job-log" data-testid="job-log">{{ job.log or 'Waiting for the first progress message…' }}</pre></div>
+</div>
+{% endblock %}

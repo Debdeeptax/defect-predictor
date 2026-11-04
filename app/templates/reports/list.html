@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block page_id %}reports{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <h1 class="h3 mb-0" id="reports-heading" data-testid="reports-heading">
+    {{ 'All reports' if current_user.can_view_all_reports else 'My reports' }}</h1>
+  <form method="get" class="d-flex gap-2 align-items-center" id="reports-filter-form" data-testid="reports-filter-form">
+    <label for="risk-filter-select" class="small text-secondary">Show</label>
+    <select name="risk" class="form-select form-select-sm" id="risk-filter-select" data-testid="risk-filter-select"
+            onchange="this.form.submit()">
+      <option value="" {% if not risk %}selected{% endif %}>All reports</option>
+      <option value="high" {% if risk == 'high' %}selected{% endif %}>With high-risk files</option>
+      <option value="medium" {% if risk == 'medium' %}selected{% endif %}>With medium-risk files</option>
+    </select>
+    <noscript><button class="btn btn-sm btn-secondary" type="submit">Filter</button></noscript>
+  </form>
+</div>
+
+{% if pagination.items %}
+<div class="card">
+<div class="table-responsive">
+<table class="table table-hover align-middle mb-0" id="reports-table" data-testid="reports-table" data-sortable>
+  <thead class="table-light">
+    <tr>
+      <th class="sortable" data-key="id" data-type="number" aria-sort="descending"><button type="button" id="reports-sort-id" data-testid="reports-sort-id">#<span class="sort-icon"></span></button></th>
+      <th class="sortable" data-key="title"><button type="button" id="reports-sort-title" data-testid="reports-sort-title">Title<span class="sort-icon"></span></button></th>
+      {% if current_user.can_view_all_reports %}<th class="sortable" data-key="owner"><button type="button" id="reports-sort-owner" data-testid="reports-sort-owner">Owner<span class="sort-icon"></span></button></th>{% endif %}
+      <th class="sortable" data-key="created" data-type="number"><button type="button" id="reports-sort-created" data-testid="reports-sort-created">Created<span class="sort-icon"></span></button></th>
+      <th>Status</th>
+      <th class="sortable text-end" data-key="files" data-type="number"><button type="button" id="reports-sort-files" data-testid="reports-sort-files">Files<span class="sort-icon"></span></button></th>
+      <th class="sortable text-end" data-key="high" data-type="number"><button type="button" id="reports-sort-high" data-testid="reports-sort-high">High<span class="sort-icon"></span></button></th>
+      <th class="sortable text-end" data-key="medium" data-type="number"><button type="button" id="reports-sort-medium" data-testid="reports-sort-medium">Medium<span class="sort-icon"></span></button></th>
+      <th class="sortable text-end" data-key="max" data-type="number"><button type="button" id="reports-sort-max" data-testid="reports-sort-max">Max prob.<span class="sort-icon"></span></button></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for r in pagination.items %}
+    <tr id="report-list-row-{{ r.id }}" data-testid="report-list-row-{{ r.id }}" data-row data-index="{{ loop.index0 }}">
+      <td data-sort-value="{{ r.id }}">{{ r.id }}</td>
+      <td data-sort-value="{{ r.title | lower }}"><a href="{{ url_for('reports.detail', report_id=r.id) }}" id="report-link-{{ r.id }}" data-testid="report-link-{{ r.id }}">{{ r.title }}</a>
+        <div class="small text-secondary">{{ r.submission.source_type }} · {{ r.submission.source_name | truncate(60) }}</div></td>
+      {% if current_user.can_view_all_reports %}<td class="small" data-sort-value="{{ r.user.email }}">{{ r.user.email }}</td>{% endif %}
+      <td class="small" data-sort-value="{{ r.created_at.timestamp() | int }}">{{ r.created_at | dt }}</td>
+      <td><span class="badge text-bg-{{ {'done': 'success', 'failed': 'danger'}.get(r.status, 'secondary') }}"
+                id="report-status-{{ r.id }}" data-testid="report-status-{{ r.id }}">{{ r.status }}</span></td>
+      <td class="text-end" data-sort-value="{{ r.n_files }}">{{ r.n_files }}</td>
+      <td class="text-end text-danger" data-sort-value="{{ r.n_high }}">{{ r.n_high }}</td>
+      <td class="text-end text-warning" data-sort-value="{{ r.n_medium }}">{{ r.n_medium }}</td>
+      <td class="text-end font-monospace" data-sort-value="{{ r.max_probability }}">{{ '%.3f' | format(r.max_probability) }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+</div>
+{% if pagination.pages > 1 %}
+<nav class="mt-3" aria-label="Report pages" id="reports-pagination" data-testid="reports-pagination">
+  <ul class="pagination pagination-sm">
+    <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
+      <a class="page-link" href="{{ url_for('reports.list_reports', page=pagination.prev_num, risk=risk) if pagination.has_prev else '#' }}" id="reports-prev-page" data-testid="reports-prev-page">Previous</a></li>
+    <li class="page-item disabled"><span class="page-link" id="reports-page-info" data-testid="reports-page-info">Page {{ pagination.page }} / {{ pagination.pages }}</span></li>
+    <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+      <a class="page-link" href="{{ url_for('reports.list_reports', page=pagination.next_num, risk=risk) if pagination.has_next else '#' }}" id="reports-next-page" data-testid="reports-next-page">Next</a></li>
+  </ul>
+</nav>
+{% endif %}
+{% else %}
+<div class="card"><div class="card-body text-secondary" id="reports-empty" data-testid="reports-empty">No reports found.</div></div>
+{% endif %}
+{% endblock %}

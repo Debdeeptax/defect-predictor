@@ -1,0 +1,32 @@
+{# Imported macros do not see the render context, so the risk->colour map lives here. #}
+{% set RISK_CLASSES = {'High': 'danger', 'Medium': 'warning', 'Low': 'success'} %}
+
+{% macro risk_badge(risk, key, prefix='risk-badge') -%}
+<span class="badge rounded-pill text-bg-{{ RISK_CLASSES.get(risk, 'secondary') }} risk-badge"
+      id="{{ prefix }}-{{ key }}" data-testid="{{ prefix }}-{{ key }}" data-risk="{{ risk }}">{{ risk }}</span>
+{%- endmacro %}
+
+{% macro prob_bar(p) -%}
+<div class="d-flex align-items-center gap-2">
+  <div class="progress flex-grow-1" style="height:6px;min-width:60px" aria-hidden="true">
+    <div class="progress-bar bg-{{ 'danger' if p >= 0.7 else 'warning' if p >= 0.4 else 'success' }}"
+         style="width:{{ (p * 100) | round(1) }}%"></div>
+  </div>
+  <span class="font-monospace small">{{ '%.3f' | format(p) }}</span>
+</div>
+{%- endmacro %}
+
+{% macro field_errors(field) -%}
+{% for e in field.errors %}<div class="invalid-feedback d-block" data-testid="{{ field.id | testid }}-error">{{ e }}</div>{% endfor %}
+{%- endmacro %}
+
+{% macro status_marker(status) -%}
+{# Selenium sync point: present once the page reflects a finished state. #}
+{% if status == 'done' %}
+<span class="badge text-bg-success" id="status-done" data-testid="status-done">Analysis complete</span>
+{% elif status == 'failed' %}
+<span class="badge text-bg-danger" id="status-failed" data-testid="status-failed">Failed</span>
+{% else %}
+<span class="badge text-bg-secondary" id="status-running" data-testid="status-running">Running…</span>
+{% endif %}
+{%- endmacro %}

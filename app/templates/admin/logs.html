@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Logs{% endblock %}
+{% block page_id %}admin-logs{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3" id="logs-heading" data-testid="logs-heading">Logs</h1>
+<div class="card mb-3">
+  <div class="card-header bg-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+    <span class="fw-semibold">Audit trail <span class="text-secondary small">(latest 200)</span></span>
+    <form method="get" class="d-flex gap-2 align-items-center m-0" id="audit-filter-form" data-testid="audit-filter-form">
+      <label for="audit-action-select" class="small text-secondary">Action</label>
+      <select name="action" class="form-select form-select-sm" id="audit-action-select" data-testid="audit-action-select" onchange="this.form.submit()">
+        <option value="">All</option>
+        {% for a in actions %}<option value="{{ a }}" {% if a == action %}selected{% endif %}>{{ a }}</option>{% endfor %}
+      </select>
+      <noscript><button class="btn btn-sm btn-secondary" type="submit">Filter</button></noscript>
+    </form>
+  </div>
+  <div class="table-responsive" style="max-height:420px">
+  <table class="table table-sm mb-0" id="audit-table" data-testid="audit-table">
+    <thead class="table-light"><tr><th>Time</th><th>User</th><th>Action</th><th>Detail</th><th>IP</th></tr></thead>
+    <tbody>
+    {% for e in events %}
+      <tr id="audit-row-{{ e.id }}" data-testid="audit-row" data-action="{{ e.action }}">
+        <td class="small text-nowrap">{{ e.created_at | dt }}</td><td class="small">{{ e.user.email if e.user else '–' }}</td>
+        <td><span class="badge text-bg-light">{{ e.action }}</span></td><td class="small file-path">{{ e.detail }}</td><td class="small">{{ e.ip or '' }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5" class="text-secondary" data-testid="audit-empty">No events.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header bg-white fw-semibold">Application log <span class="text-secondary small">(logs/app.log, last 200 lines)</span></div>
+  <div class="card-body"><pre class="log-view mb-0" id="app-log" data-testid="app-log">{% for line in log_lines %}{{ line }}
+{% else %}Log file is empty.{% endfor %}</pre></div>
+</div>
+{% endblock %}

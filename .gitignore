@@ -13,3 +13,4 @@ data/processed/*
 !data/processed/.gitkeep
 .ipynb_checkpoints/
 models/*.joblib
+instance/training_results/

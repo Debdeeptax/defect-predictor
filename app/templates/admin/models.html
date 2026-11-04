@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %}Models{% endblock %}
+{% block page_id %}admin-models{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3" id="models-heading" data-testid="models-heading">Models</h1>
+<div class="row g-3 mb-3">
+{% for level, info in levels.items() %}
+  <div class="col-xl-6">
+    <div class="card h-100" id="model-card-{{ level }}" data-testid="model-card-{{ level }}">
+      <div class="card-header bg-white d-flex justify-content-between">
+        <span class="fw-semibold text-capitalize">{{ level }}-level model</span>
+        <span class="small text-secondary">{{ 'NASA MDP' if level == 'function' else 'PROMISE CK' }}</span>
+      </div>
+      {% if info.versions %}
+      <div class="table-responsive">
+      <table class="table table-sm align-middle mb-0" id="versions-table-{{ level }}" data-testid="versions-table-{{ level }}">
+        <thead class="table-light"><tr><th>Version</th><th>Algorithm</th><th class="text-end">CV AUC</th><th class="text-end">F1</th><th>Trained</th><th></th></tr></thead>
+        <tbody>
+        {% for v in info.versions %}
+          {% set active = v.file == info.active %}
+          <tr id="version-row-{{ level }}-v{{ v.version }}" data-testid="version-row-{{ level }}-v{{ v.version }}" class="{{ 'table-success' if active }}">
+            <td class="text-nowrap">v{{ v.version }}<div class="small text-secondary">{{ v.dataset | truncate(28) }}</div></td>
+            <td class="small">{{ v.display_name }}</td>
+            <td class="text-end font-monospace">{{ '%.3f' | format(v.cv.metrics.roc_auc.mean) }}</td>
+            <td class="text-end font-monospace">{{ '%.3f' | format(v.cv.metrics.f1.mean) }}</td>
+            <td class="small">{{ v.trained_at[:16] | replace('T', ' ') }}</td>
+            <td class="text-end">
+              {% if active %}
+                <span class="badge text-bg-success" id="active-badge-{{ level }}" data-testid="active-badge-{{ level }}" data-version="{{ v.version }}">active</span>
+              {% else %}
+              <form method="post" action="{{ url_for('admin.activate_model') }}" class="m-0">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="level" value="{{ level }}"><input type="hidden" name="file" value="{{ v.file }}">
+                <button type="submit" class="btn btn-sm btn-outline-primary" id="activate-btn-{{ level }}-v{{ v.version }}"
+                        data-testid="activate-btn-{{ level }}-v{{ v.version }}">Activate</button>
+              </form>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      </div>
+      {% else %}
+      <div class="card-body text-danger" data-testid="no-models-{{ level }}">No trained model. Start a training job below.</div>
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-5">
+    <div class="card"><div class="card-body">
+      <h2 class="h5">Retrain</h2>
+      {% if running %}
+      <div class="alert alert-info small" id="training-running" data-testid="training-running">
+        Job <a href="{{ url_for('admin.job', job_id=running.id) }}" data-testid="running-job-link">#{{ running.id }}</a> is {{ running.status }}.</div>
+      {% endif %}
+      <form method="post" action="{{ url_for('admin.retrain') }}" enctype="multipart/form-data" id="retrain-form"
+            data-testid="retrain-form" data-loading="Starting training job…">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="mb-3">
+          <label for="retrain-level-select" class="form-label">Model level</label>
+          <select name="level" class="form-select" id="retrain-level-select" data-testid="retrain-level-select">
+            {% for value, label in form.level.choices %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="retrain-preset-select" class="form-label">Cross-validation</label>
+          <select name="preset" class="form-select" id="retrain-preset-select" data-testid="retrain-preset-select">
+            {% for value, label in form.preset.choices %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="retrain-csv-input" class="form-label">Training CSV <span class="text-secondary">(optional)</span></label>
+          <input type="file" name="data" accept=".csv" class="form-control" id="retrain-csv-input" data-testid="retrain-csv-input">
+          <div class="form-text">Default: built-in dataset. A CSV must have the NASA / PROMISE columns (or canonical feature names) plus a label column.</div>
+        </div>
+        <div class="form-check mb-3">
+          <input type="checkbox" name="activate" value="y" class="form-check-input" id="retrain-activate-checkbox"
+                 data-testid="retrain-activate-checkbox" checked>
+          <label for="retrain-activate-checkbox" class="form-check-label">Activate the new model when training finishes</label>
+        </div>
+        <button type="submit" class="btn btn-primary" id="retrain-submit-btn" data-testid="retrain-submit-btn"
+                {% if running %}disabled{% endif %}>Start training</button>
+      </form>
+    </div></div>
+  </div>
+  <div class="col-lg-7">
+    <div class="card h-100">
+      <div class="card-header bg-white fw-semibold">Recent training jobs</div>
+      {% if jobs %}
+      <div class="table-responsive">
+      <table class="table table-sm align-middle mb-0" id="jobs-table" data-testid="jobs-table">
+        <thead class="table-light"><tr><th>#</th><th>Level</th><th>Source</th><th>CV</th><th>Status</th><th>Started</th><th>By</th></tr></thead>
+        <tbody>
+        {% for j in jobs %}
+          <tr id="job-row-{{ j.id }}" data-testid="job-row-{{ j.id }}">
+            <td><a href="{{ url_for('admin.job', job_id=j.id) }}" id="job-link-{{ j.id }}" data-testid="job-link-{{ j.id }}">#{{ j.id }}</a></td>
+            <td>{{ j.level }}</td><td class="small">{{ j.source }}</td><td>{{ j.folds }}×{{ j.repeats }}</td>
+            <td><span class="badge text-bg-{{ {'done': 'success', 'failed': 'danger'}.get(j.status, 'info') }}" data-testid="job-status-{{ j.id }}">{{ j.status }}</span></td>
+            <td class="small">{{ j.created_at | dt }}</td><td class="small">{{ j.started_by.email }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      </div>
+      {% else %}
+      <div class="card-body text-secondary" data-testid="jobs-empty">No training jobs yet.</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -148,6 +148,15 @@ defect-predictor/
 | 6 | Selenium polish, POM skeleton, 3 tests, locator docs | headless Selenium run green |
 | 7 | pytest suite, README, pinned requirements, optional Dockerfile | full test run + coverage |
 
+## 6b. Phase 4–5 implementation decisions
+- **Explanations**: exact Tree SHAP costs ~0.5 s/unit on the shipped forests, so only each file's *driver* unit gets exact SHAP (riskiest files first, `EXACT_SHAP_BUDGET_SEC`, default 15 s); other units use fast Saabas SHAP (~1000× faster, ~72 % top-3 agreement). Every explanation is labelled with its method.
+- **Risk thresholds** kept at 0.4 / 0.7 after checking the out-of-fold distribution (≈27 % of NASA functions ≥ Medium, ≈5 % High).
+- **Model registry**: `models/registry.json` is the single source of truth for versions + the active model (CLI and web share it); `training_jobs` table records retrain runs; no separate `model_versions` table (avoids two sources of truth).
+- **CodeRepository** is the ingestion *service*; its persisted record is the `submissions` table (`Submission` model).
+- **No `.joblib` model uploads**: joblib/pickle files execute code on load, so admins upload *training CSVs* and retrain instead.
+- **Retraining** runs in a background thread; the job page auto-refreshes every 3 s and shows `status-done` / `status-failed` when finished. One job at a time.
+- **Unit drill-down** uses native `<details>` (no animation → no Selenium timing flakiness).
+
 ## 7. Known limitations (to state honestly in the report/paper)
 - Cross-project prediction: models trained on NASA (C/Java) and PROMISE (Java) are applied to arbitrary uploaded code; expect domain-shift.
 - Non-Python Halstead values are token-based approximations.

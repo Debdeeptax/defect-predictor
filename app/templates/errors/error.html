@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block page_id %}error-{{ code }}{% endblock %}
+{% block content %}
+<div class="text-center py-5">
+  <div class="display-4 fw-bold text-secondary" id="error-code" data-testid="error-code">{{ code }}</div>
+  <h1 class="h4" id="error-title" data-testid="error-title">{{ title }}</h1>
+  <p class="text-secondary" id="error-message" data-testid="error-message">{{ message }}</p>
+  <a href="{{ url_for('main.index') }}" class="btn btn-primary" id="error-home-btn" data-testid="error-home-btn">Go to dashboard</a>
+</div>
+{% endblock %}

@@ -1,0 +1,3 @@
+Vendored front-end libraries (served locally, no CDN at runtime):
+- Bootstrap 5.3.3 (MIT) https://getbootstrap.com
+- Chart.js 4.4.4 (MIT) https://www.chartjs.org

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block page_id %}register{% endblock %}
+{% block content %}
+<div class="card auth-card">
+  <div class="card-body p-4">
+    <h1 class="h4 mb-1" id="register-heading" data-testid="register-heading">Create an account</h1>
+    <p class="text-secondary small mb-4">New accounts start as <strong>Developer</strong>; an admin can grant other roles.</p>
+    <form method="post" novalidate id="register-form" data-testid="register-form">
+      {{ form.hidden_tag() }}
+      <div class="mb-3">
+        <label for="register-name-input" class="form-label">Full name</label>
+        <input type="text" name="name" class="form-control" id="register-name-input" data-testid="register-name-input"
+               value="{{ form.name.data or '' }}" autocomplete="name" required>
+      </div>
+      <div class="mb-3">
+        <label for="register-email-input" class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" id="register-email-input" data-testid="register-email-input"
+               value="{{ form.email.data or '' }}" autocomplete="email" required>
+      </div>
+      <div class="mb-3">
+        <label for="register-password-input" class="form-label">Password</label>
+        <input type="password" name="password" class="form-control" id="register-password-input"
+               data-testid="register-password-input" autocomplete="new-password" required>
+        <div class="form-text">At least 8 characters, with letters and digits.</div>
+      </div>
+      <div class="mb-3">
+        <label for="register-confirm-input" class="form-label">Confirm password</label>
+        <input type="password" name="confirm" class="form-control" id="register-confirm-input"
+               data-testid="register-confirm-input" autocomplete="new-password" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100" id="register-submit-btn" data-testid="register-submit-btn">Create account</button>
+    </form>
+    <p class="small text-center mt-3 mb-0">Already registered?
+      <a href="{{ url_for('auth.login') }}" id="register-login-link" data-testid="register-login-link">Log in</a></p>
+  </div>
+</div>
+{% endblock %}
