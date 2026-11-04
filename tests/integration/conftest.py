@@ -1,44 +1,13 @@
-import json
-import os
-import shutil
-from pathlib import Path
-
 import pytest
 
-from config import BASE_DIR, TestConfig
-
-PASSWORD = "Test@1234"
+from tests.helpers import PASSWORD, SAMPLE_DIR as SAMPLE, build_test_app  # noqa: F401
 
 
 @pytest.fixture(scope="session")
 def app(tmp_path_factory):
-    """Isolated app: temp DB / workspaces / logs; models dir mirrors the shipped models
-    (hard links, so retrain tests never touch the real registry)."""
-    from app import create_app
-    from app.extensions import db
-    from app.seed import seed_all
-
-    tmp = tmp_path_factory.mktemp("sdp")
-    model_dir = tmp / "models"
-    model_dir.mkdir()
-    real = BASE_DIR / "models"
-    reg = json.loads((real / "registry.json").read_text())
-    for level in reg.values():
-        for v in level["versions"]:
-            src, dst = real / v["file"], model_dir / v["file"]
-            try:
-                os.link(src, dst)
-            except OSError:
-                shutil.copy2(src, dst)
-    shutil.copy2(real / "registry.json", model_dir / "registry.json")
-
-    app = create_app(TestConfig, SQLALCHEMY_DATABASE_URI=f"sqlite:///{(tmp / 'test.db').as_posix()}",
-                     INSTANCE_DIR=tmp, UPLOAD_DIR=tmp / "uploads", WORKSPACE_DIR=tmp / "ws",
-                     LOG_DIR=tmp / "logs", MODEL_DIR=model_dir, EXACT_SHAP_BUDGET_SEC=1.0)
-    app.config.update(TRAINING_SYNC=True, TRAINING_N_JOBS=1)
-    with app.app_context():
-        seed_all(with_report=True)
+    app = build_test_app(tmp_path_factory.mktemp("sdp"))
     yield app
+    from app.extensions import db
     with app.app_context():
         db.session.remove()
         db.engine.dispose()
@@ -70,6 +39,3 @@ def qa(client):
 def admin(client):
     login(client, "admin@test.com")
     return client
-
-
-SAMPLE = Path(__file__).resolve().parents[2] / "data" / "samples" / "sample_project"

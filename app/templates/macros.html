@@ -16,10 +16,6 @@
 </div>
 {%- endmacro %}
 
-{% macro field_errors(field) -%}
-{% for e in field.errors %}<div class="invalid-feedback d-block" data-testid="{{ field.id | testid }}-error">{{ e }}</div>{% endfor %}
-{%- endmacro %}
-
 {% macro status_marker(status) -%}
 {# Selenium sync point: present once the page reflects a finished state. #}
 {% if status == 'done' %}

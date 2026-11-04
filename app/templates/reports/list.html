@@ -13,7 +13,7 @@
       <option value="high" {% if risk == 'high' %}selected{% endif %}>With high-risk files</option>
       <option value="medium" {% if risk == 'medium' %}selected{% endif %}>With medium-risk files</option>
     </select>
-    <noscript><button class="btn btn-sm btn-secondary" type="submit">Filter</button></noscript>
+    <noscript><button class="btn btn-sm btn-secondary" type="submit" id="risk-filter-btn" data-testid="risk-filter-btn">Filter</button></noscript>
   </form>
 </div>
 

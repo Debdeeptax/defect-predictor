@@ -14,3 +14,4 @@ data/processed/*
 .ipynb_checkpoints/
 models/*.joblib
 instance/training_results/
+tests/selenium/artifacts/

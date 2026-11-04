@@ -99,7 +99,7 @@
           {% endfor %}
         </td>
       </tr>
-      <tr class="unit-detail-row" data-detail-for="report-row-{{ key }}">
+      <tr class="unit-detail-row" data-detail-for="report-row-{{ key }}" id="units-row-{{ key }}" data-testid="units-row-{{ key }}">
         <td></td>
         <td colspan="7">
           <details class="units" id="units-{{ key }}" data-testid="units-{{ key }}">
@@ -108,7 +108,7 @@
               <thead><tr><th>Unit</th><th>Level</th><th>Line</th><th>Risk</th><th>Probability</th><th>Top metrics</th></tr></thead>
               <tbody>
               {% for u in f.units %}
-                <tr data-testid="unit-row-{{ key }}-{{ loop.index }}">
+                <tr id="unit-row-{{ key }}-{{ loop.index }}" data-testid="unit-row-{{ key }}-{{ loop.index }}">
                   <td class="unit-name">{{ u.unit }}</td><td>{{ u.level }}</td><td>{{ u.start_line }}</td>
                   <td>{{ risk_badge(u.risk, key ~ '-' ~ loop.index, 'unit-risk-badge') }}</td>
                   <td class="font-monospace">{{ '%.3f' | format(u.probability) }}</td>

@@ -55,7 +55,7 @@
       <h2 class="h5">Retrain</h2>
       {% if running %}
       <div class="alert alert-info small" id="training-running" data-testid="training-running">
-        Job <a href="{{ url_for('admin.job', job_id=running.id) }}" data-testid="running-job-link">#{{ running.id }}</a> is {{ running.status }}.</div>
+        Job <a href="{{ url_for('admin.job', job_id=running.id) }}" id="running-job-link" data-testid="running-job-link">#{{ running.id }}</a> is {{ running.status }}.</div>
       {% endif %}
       <form method="post" action="{{ url_for('admin.retrain') }}" enctype="multipart/form-data" id="retrain-form"
             data-testid="retrain-form" data-loading="Starting training job…">
