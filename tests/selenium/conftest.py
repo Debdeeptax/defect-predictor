@@ -59,6 +59,21 @@ def _browser():
     opts.add_argument("--window-size=1400,1000")
     opts.add_argument("--disable-gpu")
     opts.add_argument("--no-sandbox")
+    # Chrome's password manager (save-password / "password found in a data breach" bubbles,
+    # partly switched on remotely via field trials) steals keyboard focus after the first
+    # login, so later password typing and clicks silently go nowhere. Turn it all off.
+    opts.add_experimental_option("prefs", {
+        "credentials_enable_service": False,
+        "profile.password_manager_enabled": False,
+        "profile.password_manager_leak_detection": False,
+        "autofill.profile_enabled": False,
+    })
+    opts.add_argument("--disable-features=PasswordLeakDetection,PasswordManagerOnboarding,"
+                      "AutofillServerCommunication,PasswordCheck")
+    opts.add_argument("--password-store=basic")
+    opts.add_argument("--no-first-run")
+    opts.add_argument("--no-default-browser-check")
+    opts.add_argument("--disable-sync")
     opts.set_capability("goog:loggingPrefs", {"browser": "ALL"})
     try:
         drv = webdriver.Chrome(options=opts)  # Selenium Manager resolves chromedriver

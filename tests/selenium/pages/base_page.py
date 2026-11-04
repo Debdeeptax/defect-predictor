@@ -71,6 +71,13 @@ class BasePage:
         if clear:
             el.clear()
         el.send_keys(text)
+        # Fail fast with a clear message if a browser popup swallowed the keystrokes
+        # (instead of a 30 s timeout later on the click).
+        typed = el.get_attribute("value") or ""
+        if clear and typed != text:
+            raise AssertionError(
+                f"Typing into '{testid}' did not stick (field holds {len(typed)} of {len(text)} "
+                f"characters). A browser dialog may have taken keyboard focus.")
 
     def text(self, testid: str) -> str:
         return self.find(testid).text.strip()
