@@ -1,0 +1,11 @@
+.venv/
+.git/
+**/__pycache__/
+.pytest_cache/
+.coverage
+htmlcov/
+.env
+instance/
+logs/*.log*
+tests/selenium/artifacts/
+notebooks/

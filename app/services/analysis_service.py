@@ -10,6 +10,7 @@ from flask import current_app
 from app.exceptions import SDPError
 from app.extensions import db
 from app.metrics.metric_extractor import MetricExtractor
+from app.ml.ml_model import ModelNotAvailableError
 from app.models import Report, ReportStatus, Submission, User
 from app.models.user import utcnow
 from app.services.audit_service import audit
@@ -67,6 +68,9 @@ def _analyse(user: User, repo: CodeRepository, ws: Workspace, title: str | None)
         return report
     except SDPError as exc:
         _fail(report, exc.user_message)
+        raise
+    except ModelNotAvailableError as exc:  # admin must train/activate a model; say so
+        _fail(report, f"Prediction model unavailable: {exc}")
         raise
     except Exception as exc:
         log.exception("Analysis failed for report %s", report.id)

@@ -8,6 +8,7 @@ from app.ml.features import (
     FUNCTION_BASE_FEATURES,
     FUNCTION_FEATURES,
     HALSTEAD_DERIVED_FEATURES,
+    NASA_COLUMN_MAP,
     complete_function_features,
     halstead_derived,
 )
@@ -155,3 +156,18 @@ def test_stats_helpers():
     adj = holm({"a": 0.01, "b": 0.04, "c": 0.03})
     assert adj["a"] == pytest.approx(0.03) and adj["b"] >= adj["c"]
     assert project_family("xerces-1.4.4") == "xerces" and project_family("PC1") == "PC1"
+
+
+def test_load_raw_dir_skips_incompatible_files(tmp_path):
+    nasa = tmp_path / "nasa"
+    nasa.mkdir()
+    good = _function_frame(40).rename(columns={v: k for k, v in NASA_COLUMN_MAP.items()})
+    good["Defective"] = good.pop(LABEL).map({1: "Y", 0: "N"})
+    good.to_csv(nasa / "GOOD.csv", index=False)
+    good.drop(columns=["LOC_BLANK"]).to_csv(nasa / "NOBLANK.csv", index=False)   # like PC2
+    pre = DataPreprocessor("function")
+    X, y, groups = pre.prepare_training(tmp_path)
+    assert set(groups) == {"GOOD"} and len(X) > 0
+    assert pre.report.skipped_files[0]["file"] == "NOBLANK.csv"
+    with pytest.raises(FileNotFoundError):
+        DataPreprocessor("class").load_raw_dir(tmp_path)   # no promise/ folder

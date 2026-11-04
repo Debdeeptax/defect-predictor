@@ -1,30 +1,33 @@
+# Direct dependencies, pinned to the versions the test suite passes with (Python 3.11).
+# Full transitive lock: requirements-lock.txt
+
 # Web
-Flask>=3.0,<4
-Flask-SQLAlchemy>=3.1,<4
-Flask-Login>=0.6.3,<1
-Flask-WTF>=1.2,<2
-WTForms>=3.1,<3.4  # 3.4 removes tuple SelectField choices
-python-dotenv>=1.0,<2
+Flask==3.1.3
+Flask-SQLAlchemy==3.1.1
+Flask-Login==0.6.3
+Flask-WTF==1.3.0
+WTForms==3.3.2
+python-dotenv==1.2.4
 
 # ML / data
-numpy>=1.26,<3
-pandas>=2.2,<3
-scikit-learn>=1.5,<1.8
-imbalanced-learn>=0.12,<0.15
-scipy>=1.13,<2
-shap>=0.46,<1
-joblib>=1.4,<2
-matplotlib>=3.8,<4
+numpy==2.4.6
+pandas==2.3.3
+scikit-learn==1.7.2
+imbalanced-learn==0.14.2
+scipy==1.17.1
+shap==0.51.0
+joblib==1.6.0
+matplotlib==3.11.2
 
 # Metrics / ingestion
-radon>=6.0,<7
-lizard>=1.17,<2
-GitPython>=3.1.43,<4
+radon==6.0.1
+lizard==1.25.0
+GitPython==3.2.1
 
 # Reports
-reportlab>=4.2,<5
+reportlab==4.5.1
 
 # Testing
-pytest>=8,<9
-pytest-cov>=5,<7
-selenium>=4.25,<5
+pytest==8.4.2
+pytest-cov==6.3.0
+selenium==4.52.0
