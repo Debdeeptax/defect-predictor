@@ -180,7 +180,7 @@ def test_language_detection_and_ignores():
 # ------------------------------------------------------------------ extractor
 def test_extractor_on_sample_project():
     res = MetricExtractor().extract(SAMPLE)
-    assert res.languages == {"python": 4, "java": 1, "c": 1, "javascript": 1}
+    assert res.languages == {"python": 5, "java": 1, "c": 1, "javascript": 1}
     paths = {f.path for f in res.files}
     assert "inventory/pricing.py" in paths
     pricing = next(f for f in res.files if f.path == "inventory/pricing.py")
