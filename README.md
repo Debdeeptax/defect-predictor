@@ -42,6 +42,7 @@ Requirements: **Python 3.11**, Git, and (only for Selenium tests) Google Chrome.
 ```powershell
 git clone <this repo> defect-predictor; cd defect-predictor
 py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 copy .env.example .env                      # then set SECRET_KEY
 .\.venv\Scripts\python.exe scripts\reset_db.py   # tables + demo users + sample report
@@ -51,6 +52,7 @@ copy .env.example .env                      # then set SECRET_KEY
 **macOS / Linux**
 ```bash
 python3.11 -m venv .venv && . .venv/bin/activate
+pip install --upgrade pip
 pip install -r requirements.txt
 cp .env.example .env
 python scripts/reset_db.py
@@ -281,7 +283,7 @@ defect-predictor/
 
 | Symptom | Fix |
 |---|---|
-| `pip install` fails with a read timeout | `python -m pip install --timeout 120 --retries 10 -r requirements.txt` |
+| `pip install` fails with a read timeout or is very slow | slow connection to PyPI: `python -m pip install --timeout 120 --retries 10 -r requirements.txt` (re-running reuses already downloaded wheels) |
 | `ModelNotAvailableError` / `/health` says `degraded` | ensure `models/registry.json` and the `.joblib` files exist, or run `python scripts/train.py` |
 | Model fails to load after upgrading packages | the artifacts are pickled with scikit-learn 1.7.2; keep the pinned versions or retrain |
 | Port 5000 in use | set `PORT=5001` in `.env` |
