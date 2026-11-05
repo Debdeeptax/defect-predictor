@@ -36,11 +36,19 @@ produces a ranked, explained report (HTML, CSV, PDF).
 
 ## Quick start
 
-Requirements: **Python 3.11**, Git, and (only for Selenium tests) Google Chrome.
+Requirements: **Python 3.11** (exactly 3.11: the trained models and pinned ML libraries are built for it),
+and Google Chrome for the Selenium tests. Git is optional.
+
+**Get the code:** either
+`git clone https://github.com/Debdeeptax/defect-predictor.git`, or download the ZIP
+([direct link](https://github.com/Debdeeptax/defect-predictor/archive/refs/heads/master.zip), or
+green **Code** button → **Download ZIP**) and unzip it. A beginner, step-by-step version of these
+instructions is in [`docs/Installation_Guide.pdf`](docs/Installation_Guide.pdf). It was written
+while this repository was private, so **skip its Step 5**: no GitHub account or invitation is needed now.
 
 **Windows (PowerShell)**
 ```powershell
-git clone <this repo> defect-predictor; cd defect-predictor
+cd defect-predictor          # the cloned folder (a downloaded ZIP unzips to defect-predictor-master)
 py -3.11 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install --upgrade pip
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
