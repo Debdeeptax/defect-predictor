@@ -45,6 +45,8 @@ and Google Chrome for the Selenium tests. Git is optional.
 green **Code** button → **Download ZIP**) and unzip it. A beginner, step-by-step version of these
 instructions is in [`docs/Installation_Guide.pdf`](docs/Installation_Guide.pdf). It was written
 while this repository was private, so **skip its Step 5**: no GitHub account or invitation is needed now.
+For Selenium testing (setup, running the 70 browser tests, writing new ones, exam preparation), follow
+[`docs/Selenium_Testing_Guide.pdf`](docs/Selenium_Testing_Guide.pdf).
 
 **Windows (PowerShell)**
 ```powershell

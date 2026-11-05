@@ -1,0 +1,7 @@
+case_id,email,password,expected_result,expected_message
+TC_LOGIN_01_valid_developer,dev@test.com,Test@1234,success,developer
+TC_LOGIN_02_valid_qa,qa@test.com,Test@1234,success,qa
+TC_LOGIN_03_valid_admin,admin@test.com,Test@1234,success,admin
+TC_LOGIN_04_wrong_password,dev@test.com,Wrong@1234,error,Invalid email or password.
+TC_LOGIN_05_unknown_email,nobody@test.com,Test@1234,error,Invalid email or password.
+TC_LOGIN_06_password_wrong_case,dev@test.com,test@1234,error,Invalid email or password.

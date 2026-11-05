@@ -16,3 +16,4 @@ models/*.joblib
 instance/training_results/
 tests/selenium/artifacts/
 .coverage.*
+reports/
